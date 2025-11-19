@@ -54,33 +54,48 @@ The main database contains 8 tables, with a total of:
 #### Database Schema
 
 - Table: customers (122 rows)
-Customer details, sales representative, credit limit, location
+  - Customer details, sales representative, credit limit, location
 
 - Table: employees (23 rows)
-Employee info, job titles, reporting hierarchy
+  - Employee info, job titles, reporting hierarchy
 
 - Table: offices (7 rows)
-Regional office locations & contact data
+  - Regional office locations & contact data
 
 - Table: orders (326 rows)
-Order header (dates, status, customer)
+  - Order header (dates, status, customer)
 
 - Table: orderdetails (2994 rows)
-Line item detail per order
-Core of revenue calculation
+  - Line item detail per order
+  - Core of revenue calculation
 
 - Table: payments (273 rows)
-Customer payment history
+  - Customer payment history
 
 - Table: products (110 rows)
-Product catalog & pricing
+  - Product catalog & pricing
 
 - Table: productlines (7 rows)
-Product line grouping / descriptions
+  - Product line grouping / descriptions
 
 **Database Schema:**
 
 ![Database Schema](img/toys_and_models-db.png)
+
+---
+
+## Executive Summary
+Overview of Findings
+
+The analysis shows that revenue is highly concentrated in a small subset of top-performing products, with significant geographic variation across countries. Customer workload among sales representatives is unevenly distributed, and operational checks reveal minor data inconsistencies related to referential integrity and missing values. Monthly performance exhibits predictable seasonality that can be leveraged for forecasting.
+
+Three most important insights:
+
+Sales are heavily concentrated: ~20% of products generate more than 60% of total revenue.
+
+Geography matters: Certain countries consistently outperform others and show different purchasing patterns.
+
+Sales reps have uneven customer loads, impacting performance, responsiveness, and operational balance.
 
 
 ---
@@ -112,6 +127,7 @@ Each stage of the workflow builds upon the previous one:
 6. **Structural/Organizacional Queries**
    
    
+
 
 
 
