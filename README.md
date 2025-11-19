@@ -20,8 +20,8 @@ From the perspective of a data analyst, this project evaluates:
 -Customer behavior
 -Product demand patterns
 -Operational quality & data integrity
--Organizational structure
--Forecasting-ready datasets
+-- Organizational structure
+-- Forecasting-ready datasets
 
 Insights and recommendations are provided on four key areas:
 
@@ -60,4 +60,5 @@ Each stage of the workflow builds upon the previous one:
 6. **Structural/Organizacional Queries**
    
    
+
 
