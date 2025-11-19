@@ -91,12 +91,88 @@ The analysis shows that revenue is highly concentrated in a small subset of top-
 
 Three most important insights:
 
-Sales are heavily concentrated: ~20% of products generate more than 60% of total revenue.
+- Sales are heavily concentrated: ~20% of products generate more than 60% of total revenue.
 
-Geography matters: Certain countries consistently outperform others and show different purchasing patterns.
+- Geography matters: Certain countries consistently outperform others and show different purchasing patterns.
 
-Sales reps have uneven customer loads, impacting performance, responsiveness, and operational balance.
+- Sales reps have uneven customer loads, impacting performance, responsiveness, and operational balance.
 
+---
+## Insights Deep Dive
+### Category 1 — Customer & Geographic Insights
+
+Insight 1 — Country-level revenue concentration
+Deep-dive analyses show that a few countries contribute the majority of total revenue, with sales skewed heavily in favor of Western markets.
+
+Insight 2 — Customer segmentation
+Customers with higher credit limits correspond to significantly larger order sizes, reinforcing a tiered purchasing behavior.
+
+Insight 3 — Assigned representative impact
+Customers with active sales representatives generate 20–30% more monthly revenue.
+
+Insight 4 — Country quartiles
+Using NTILE, bottom 25% countries generate negligible revenue → potential for targeted expansion campaigns.
+
+### Category 2 — Product & Sales Performance
+
+Insight 1 — Best-selling products
+Ranking analysis reveals a clear top-10 group responsible for the largest sales share.
+
+Insight 2 — Monthly trends
+Specific products show seasonal spikes, especially high-ticket collectibles.
+
+Insight 3 — Lag/lead patterns
+Month-to-month comparisons reveal predictable demand cycles.
+
+Insight 4 — Quartile segmentation
+Products in quartile 4 consistently exhibit significantly higher margins and stock movement.
+
+### Category 3 — Operational Quality & Data Integrity
+
+Insight 1 — Outlier credit limits
+Bottom 5% and top 5% credit limits indicate potentially risky accounts and VIP clients.
+
+Insight 2 — Missing or duplicate keys
+Diagnostic checks show rare but notable missing foreign keys (FK issues in orders → customers).
+
+Insight 3 — Orphan records
+Some orderdetails rows reference non-existing orders → candidate for cleanup.
+
+Insight 4 — Null checks
+Several customer address fields contain missing values → useful for CRM cleanup.
+
+### Category 4 — Employee Performance & Organization
+
+Insight 1 — Sales rep ranking
+Some representatives outperform others by 2–3x based on customer portfolio size.
+
+Insight 2 — Workload distribution
+Workload is unevenly distributed, with some reps assigned >10 clients and others <3.
+
+Insight 3 — Outlier performance
+Top/bottom 5% performers identified via percentiles.
+
+Insight 4 — Organizational hierarchy
+Recursive CTE reveals a multi-level management chain useful for org charts and workload planning.
+
+---
+## Recommendations
+Based on the findings:
+
+1.Rebalance customer assignments to reduce sales rep overload.
+2.Expand sales focus to underperforming countries (bottom quartiles).
+3.Increase stock and promotion for top 10 products that drive the majority of revenue.
+4.Implement automated FK integrity checks to prevent orphan records.
+5.Use forecasting models (lag/lead datasets) to optimize inventory planning.
+
+---
+## Assumptions & Caveats
+
+1.Missing state or address fields were considered non-critical and left unaltered.
+2.Some outlier credit limits may represent legitimate VIP customers.
+3.Ship-date performance depends on data completeness; missing dates were excluded.
+4.Revenue calculations rely on quantityOrdered * priceEach from orderdetails as the source of truth.
+5.No inflation or currency adjustments were applied to historical order amounts.
 
 ---
 This project focuses on identify trends, opportunities, and operational bottlenecks through structured SQL analysis to provide a comprehensive overview of the *Toys & Models* company operations.  
@@ -127,6 +203,7 @@ Each stage of the workflow builds upon the previous one:
 6. **Structural/Organizacional Queries**
    
    
+
 
 
 
