@@ -17,6 +17,7 @@ The queries leverage:
 
 ### Directory Contents
 - 01_sales_by_country_vs_region.sql
+  
   Multilevel geographic deep dive (territorial analysis and commercial expansion strategies):
   - Sales by country and region
   - Regional and global totals
@@ -26,6 +27,7 @@ The queries leverage:
   - “Market coverage” style analysis
 
 - 02_products_deep_agg.sql
+  
   Deep dive into product performance (A complete SKU-level portfolio analysis):
   - Total sales
   - Units sold
@@ -36,6 +38,7 @@ The queries leverage:
   - ABC segmentation
   
 - 03_customer_deep_agg_phase2.sql
+  
   Deep dive into customer performance (Critical for segmentation, CRM, marketing, and customer value analysis):
   - Sales, units, and distinct products purchased
   - Average ticket metrics
@@ -44,6 +47,7 @@ The queries leverage:
   - Ranking.
 
 - 04_salesrep_performance_deep_agg.sql
+  
   Comprehensive salesforce performance analysis (a full 360° view of the sales organization):
   - Total sales
   - Units and orders
@@ -54,6 +58,7 @@ The queries leverage:
   - Global ranking and ABC classification
 
 - 05_productline_sales_mom_trend.sql
+  
   Time-series analysis by product family (productLine):
   - Monthly sales
   - MoM (absolute and %)
@@ -62,6 +67,7 @@ The queries leverage:
   - Within-line comparisons
 
 - 06_top_bottom_product_by_productline.sql
+  
   Top and bottom performers within each product line (prioritization and lifecycle decisions):
   - Best-selling product per line
   - Least-selling product per line
@@ -69,6 +75,7 @@ The queries leverage:
   - Driver vs. tail product analysis
 
 - 07_product_sales_mom_trend.sql
+  
   Monthly trend analysis for a specific SKU (monitoring premium or strategic products):
   - MoM
   - YoY
@@ -76,6 +83,7 @@ The queries leverage:
   - Granular SKU-level diagnostics
 
 - 08_salesrep_rank_by_revenue.sql
+  
   Lean but robust ranking of sales representatives:
   - Total sales
   - Number of customers
