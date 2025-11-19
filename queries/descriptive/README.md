@@ -8,59 +8,59 @@ The approach is fully descriptive and focused on producing key KPIs that serve a
 
 - 01_table_exploration.sql
 
-Explores the general structure of the database. Includes:
+  Explores the general structure of the database. Includes:
 
-  - List of tables
-  - Basic content review
-  - General exploration
+    - List of tables
+    - Basic content review
+    - General exploration
 
 - 02_table_dimensions.sql
 
-Retrieves the fundamental dimensions of the dataset:
+  Retrieves the fundamental dimensions of the dataset:
 
-- Number of rows per table
-- Number of columns per table (via PRAGMA)
+  - Number of rows per table
+  - Number of columns per table (via PRAGMA)
 
 - 03_business_overview.sql
 
-Provides a high-level business overview. Reports:
+  Provides a high-level business overview. Reports:
 
-- Total number of customers
-- Total number of products
-- Total number of employees
+  - Total number of customers
+  - Total number of products
+  - Total number of employees
 
 - 04_customer_credit_profile.sql
 
-Analyzes the credit profile of customers:
+  Analyzes the credit profile of customers:
 
-- Maximum, minimum, and average credit limit (Excluding zero-value limits)
+  - Maximum, minimum, and average credit limit (Excluding zero-value limits)
 
 - 05_sales_by_country.sql
 
-Full sales report by country, including:
+  Full sales report by country, including:
 
-- Total sales
-- Number of orders
-- Average sales per customer
-- Average order value (ticket size)
-- Ranking by sales volume
+  - Total sales
+  - Number of orders
+  - Average sales per customer
+  - Average order value (ticket size)
+  - Ranking by sales volume
 
 - 06_customer_salesrep_map.sql
 
-Relationship between customers and sales representatives. Includes:
+  Relationship between customers and sales representatives. Includes:
 
-- Customers without an assigned representative
-- Customer count per representative
-- Ordered customer–representative mapping
+  - Customers without an assigned representative
+  - Customer count per representative
+  - Ordered customer–representative mapping
 
 - 07_order_size_unique_products.sql
 
-Detailed analysis of orders:
+  Detailed analysis of orders:
 
-- Number of unique products per order
-- Total order value
-- Total units sold
-- Ranking by order value
+  - Number of unique products per order
+  - Total order value
+  - Total units sold
+  - Ranking by order value
 
 ### Module Objective
 
