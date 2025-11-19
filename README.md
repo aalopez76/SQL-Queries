@@ -159,20 +159,20 @@ Recursive CTE reveals a multi-level management chain useful for org charts and w
 ## Recommendations
 Based on the findings:
 
-1.Rebalance customer assignments to reduce sales rep overload.
-2.Expand sales focus to underperforming countries (bottom quartiles).
-3.Increase stock and promotion for top 10 products that drive the majority of revenue.
-4.Implement automated FK integrity checks to prevent orphan records.
-5.Use forecasting models (lag/lead datasets) to optimize inventory planning.
+1. Rebalance customer assignments to reduce sales rep overload.
+2 .Expand sales focus to underperforming countries (bottom quartiles).
+3. Increase stock and promotion for top 10 products that drive the majority of revenue.
+4. Implement automated FK integrity checks to prevent orphan records.
+5. Use forecasting models (lag/lead datasets) to optimize inventory planning.
 
 ---
 ## Assumptions & Caveats
 
-1.Missing state or address fields were considered non-critical and left unaltered.
-2.Some outlier credit limits may represent legitimate VIP customers.
-3.Ship-date performance depends on data completeness; missing dates were excluded.
-4.Revenue calculations rely on quantityOrdered * priceEach from orderdetails as the source of truth.
-5.No inflation or currency adjustments were applied to historical order amounts.
+1. Missing state or address fields were considered non-critical and left unaltered.
+2. Some outlier credit limits may represent legitimate VIP customers.
+3. Ship-date performance depends on data completeness; missing dates were excluded.
+4. Revenue calculations rely on quantityOrdered * priceEach from orderdetails as the source of truth.
+5. No inflation or currency adjustments were applied to historical order amounts.
 
 ---
 This project focuses on identify trends, opportunities, and operational bottlenecks through structured SQL analysis to provide a comprehensive overview of the *Toys & Models* company operations.  
@@ -203,6 +203,7 @@ Each stage of the workflow builds upon the previous one:
 6. **Structural/Organizacional Queries**
    
    
+
 
 
 
