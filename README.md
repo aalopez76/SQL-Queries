@@ -4,9 +4,9 @@ A complete SQL portfolio project: descriptive, analytical, diagnostic, predictiv
 
 ### Project Background
 
-This project analyzes the operational and commercial performance of Toys & Models Co., a global distributor of collectible cars, motorcycles, planes, and scale models.
+This project analyzes the operational and commercial performance of *Toys & Models Co.*, a global distributor of collectible cars, motorcycles, planes, and scale models.
 
-The company operates in the wholesale/retail hobbyist industry and has been active for over 20 years, serving customers across North America, Europe, and APAC. Its business model revolves around:
+The company operates in the wholesale/retail hobbyist industry, serving customers across North America, Europe, and APAC. Its business model revolves around:
 
 - Selling scale-model products (cars, planes, ships, motorcycles)
 - Managing customer orders & payments
@@ -14,7 +14,7 @@ The company operates in the wholesale/retail hobbyist industry and has been acti
 - A B2B commercial structure (customers have assigned sales representatives)
 - Product-centric revenue driven by seasonal demand
 
-From the perspective of a data analyst, this project evaluates:
+From the perspective of a data scientist, this project evaluates:
 
 - Sales performance
 - Customer behavior
@@ -36,9 +36,10 @@ The SQL queries used for exploration, cleaning, analysis, and modeling are organ
 - diagnostic
 - predictive
 - structural
- 
+
 ---
 ### Data Structure & Initial Checks
+The database contains detailed information about employees, products, orders, customers, and payments — forming a realistic business ecosystem suitable for relational data modeling and advanced SQL querying.
 
 The main database contains 8 tables, with a total of:
 
@@ -52,6 +53,8 @@ The main database contains 8 tables, with a total of:
 - 7 offices
 
 #### Database Schema
+
+![Database Schema](img/toys_and_models-db.png)
 
 - Table: customers (122 rows)
   - Customer details, sales representative, credit limit, location
@@ -78,16 +81,12 @@ The main database contains 8 tables, with a total of:
 - Table: productlines (7 rows)
   - Product line grouping / descriptions
 
-**Database Schema:**
-
-![Database Schema](img/toys_and_models-db.png)
-
 ---
 
 ## Executive Summary
 Overview of Findings
 
-The analysis shows that revenue is highly concentrated in a small subset of top-performing products, with significant geographic variation across countries. Customer workload among sales representatives is unevenly distributed, and operational checks reveal minor data inconsistencies related to referential integrity and missing values. Monthly performance exhibits predictable seasonality that can be leveraged for forecasting.
+The analysis shows that revenue is highly concentrated in a small subset of top-performing products, with significant geographic variation across countries. Customer workload among sales representatives is unevenly distributed, and operational checks reveal minor data inconsistencies related to referential integrity and missing values. Monthly performance exhibits predictable seasonality that can be leveraged for forecasting however, orders that have not yet been paid can't be achieved because of the modelling of the database.
 
 Three most important insights:
 
@@ -160,7 +159,7 @@ Recursive CTE reveals a multi-level management chain useful for org charts and w
 Based on the findings:
 
 1. Rebalance customer assignments to reduce sales rep overload.
-2 .Expand sales focus to underperforming countries (bottom quartiles).
+2. Expand sales focus to underperforming countries (bottom quartiles).
 3. Increase stock and promotion for top 10 products that drive the majority of revenue.
 4. Implement automated FK integrity checks to prevent orphan records.
 5. Use forecasting models (lag/lead datasets) to optimize inventory planning.
@@ -174,35 +173,10 @@ Based on the findings:
 4. Revenue calculations rely on quantityOrdered * priceEach from orderdetails as the source of truth.
 5. No inflation or currency adjustments were applied to historical order amounts.
 
----
-This project focuses on identify trends, opportunities, and operational bottlenecks through structured SQL analysis to provide a comprehensive overview of the *Toys & Models* company operations.  
 
-The database contains detailed information about employees, products, orders, customers, and payments — forming a realistic business ecosystem suitable for relational data modeling and advanced SQL querying.
-
-**Database Schema:**
-
-![Database Schema](img/toys_and_models-db.png)
-
----
-
-### Project Summary
-
-The goal of this project is to extract, and analyze key business insights by progressing from fundamental SQL operations to advanced analytical queries 
-
-Each stage of the workflow builds upon the previous one:
-
-1. **Database Connection**  
-   A modular, Object-Oriented (OOP) connection layer is implemented to support multiple database engines (e.g., MySQL, PostgreSQL, SQLite).  
-   This abstraction enables flexible and reusable interaction with diverse data sources.  
-   The class definitions and credential configuration can be reviewed in the repository’s `SQL-Connection` module.
-
-2. **Desciptive Queries**
-3. **Analytical Queries**
-4. **Diagnostic Queries**
-5. **Predictive or Feature-Support Queries**
-6. **Structural/Organizacional Queries**
    
    
+
 
 
 
