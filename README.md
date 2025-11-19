@@ -30,7 +30,59 @@ Insights and recommendations are provided on four key areas:
 - Category 3: Operational Quality & Data Integrity
 - Category 4: Employee & Organizational Structure
 
+The SQL queries used for exploration, cleaning, analysis, and modeling are organized in:
+- descriptive
+- analytical
+- diagnostic
+- predictive
+- structural
  
+---
+### Data Structure & Initial Checks
+
+The main database contains 8 tables, with a total of:
+
+- 122 customers
+- 23 employees
+- 7 product lines
+- 110 products
+- 326 orders
+- 2,994 order details
+- 273 payments
+- 7 offices
+
+#### Database Schema
+
+- Table: customers (122 rows)
+Customer details, sales representative, credit limit, location
+
+- Table: employees (23 rows)
+Employee info, job titles, reporting hierarchy
+
+- Table: offices (7 rows)
+Regional office locations & contact data
+
+- Table: orders (326 rows)
+Order header (dates, status, customer)
+
+- Table: orderdetails (2994 rows)
+Line item detail per order
+Core of revenue calculation
+
+- Table: payments (273 rows)
+Customer payment history
+
+- Table: products (110 rows)
+Product catalog & pricing
+
+- Table: productlines (7 rows)
+Product line grouping / descriptions
+
+**Database Schema:**
+
+![Database Schema](img/toys_and_models-db.png)
+
+
 ---
 This project focuses on identify trends, opportunities, and operational bottlenecks through structured SQL analysis to provide a comprehensive overview of the *Toys & Models* company operations.  
 
@@ -60,6 +112,7 @@ Each stage of the workflow builds upon the previous one:
 6. **Structural/Organizacional Queries**
    
    
+
 
 
 
