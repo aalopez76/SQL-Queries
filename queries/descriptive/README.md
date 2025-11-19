@@ -1,67 +1,75 @@
 ## Descriptive SQL Queries
 
-Este módulo contiene un conjunto de consultas SQL descriptivas diseñadas para explorar y analizar la base comercial toys_and_models.sqlite. Todas las consultas están orientadas al análisis exploratorio de datos (EDA), reporte de KPIs y comprensión del negocio desde diversas perspectivas: tablas, clientes, representantes, países y pedidos.
+This module contains a set of SQL queries designed to explore, profile, and understand the *Toys & Models (Classic Models)* commercial database. Each script addresses a different aspect of the business: table structure, dimensions, customer profiles, sales, sales representative performance, and order composition.
 
-- Objetivo del módulo
+The approach is fully descriptive and focused on producing key KPIs that serve as the foundation for more advanced analytical work.
 
-Estas consultas permiten responder preguntas clave como:
-- ¿Cuál es la estructura de la base?
-- ¿Qué tan grande es cada tabla?
-- ¿Cómo se distribuye el crédito entre los clientes?
-- ¿Qué países generan más ventas?
-- ¿Cuántos clientes tiene cada representante?
-- ¿Qué órdenes son más grandes y rentables?
-- ¿Cómo aportan los pedidos al total del negocio?
+### Directory Contents
 
+- 01_table_exploration.sql
 
-  ### Contenido del directorio
-  - 01_table_exploration.sql
-    
-    Consulta que explora la estructura de la base de datos.
-    Incluye:
-    - Listado de tablas
-    - Revisión de contenido básico
-    - Exploración general
+Explores the general structure of the database. Includes:
 
-  - 02_table_dimensions.sql
-    
-    Script para obtener las dimensiones de la base:
-    - Número de filas por tabla
-    - Número de columnas por tabla (via PRAGMA)
+  - List of tables
+  - Basic content review
+  - General exploration
 
-  - 03_business_overview.sql
-    
-    Proporciona indicadores descriptivos clave para entender el tamaño del negocio:
-    - Total de clientes
-    - Total de productos
-    - Total de empleados
+- 02_table_dimensions.sql
 
-  - 04_customer_credit_profile.sql
-    
-    Analiza el comportamiento de crédito de los clientes:
-    - Máximo, mínimo y promedio del credit limit (Exclusión de valores cero9
+Retrieves the fundamental dimensions of the dataset:
 
-  - 05_sales_by_country.sql
-    
-    Reporte completo de ventas por país, incluyendo:
-    - Ventas totales
-    - Número de pedidos
-    - Ventas promedio por cliente
-    - Ticket promedio
-    - Ranking por volumen de ventas
+- Number of rows per table
+- Number of columns per table (via PRAGMA)
 
-  - 06_customer_salesrep_map.sql
-    
-    Relación entre clientes y representantes de ventas.
-    Muestra:
-    - Clientes sin representante
-    - Conteo de clientes por representante
-    - Mapa ordenado cliente–representante
+- 03_business_overview.sql
 
-  - 07_order_size_unique_products.sql
-    
-    Reporte detallado de composición de pedidos:
-    - Cantidad de productos distintos por pedido
-    - Valor total del pedido
-    - Total de unidades vendidas
-    - Ranking por valor de orden
+Provides a high-level business overview. Reports:
+
+- Total number of customers
+- Total number of products
+- Total number of employees
+
+- 04_customer_credit_profile.sql
+
+Analyzes the credit profile of customers:
+
+- Maximum, minimum, and average credit limit (Excluding zero-value limits)
+
+- 05_sales_by_country.sql
+
+Full sales report by country, including:
+
+- Total sales
+- Number of orders
+- Average sales per customer
+- Average order value (ticket size)
+- Ranking by sales volume
+
+- 06_customer_salesrep_map.sql
+
+Relationship between customers and sales representatives. Includes:
+
+- Customers without an assigned representative
+- Customer count per representative
+- Ordered customer–representative mapping
+
+- 07_order_size_unique_products.sql
+
+Detailed analysis of orders:
+
+- Number of unique products per order
+- Total order value
+- Total units sold
+- Ranking by order value
+
+### Module Objective
+
+This set of queries helps answer key business questions:
+
+- What is the structure and distribution of the dataset?
+- How large are the tables, and how are they related?
+- What is the credit profile of customers?
+- Which markets generate the highest sales volume?
+- How many customers does each representative manage, and how are they distributed?
+- Which orders stand out due to size or value, and what products do they include?
+- How do orders contribute to the organization’s overall performance?
