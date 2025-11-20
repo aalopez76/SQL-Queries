@@ -41,3 +41,69 @@ Below is the recommended sequence for executing data quality checks, ordered by 
   orderdetails.orderNumber  →  orders.orderNumber
 
   ```
+  Flags order lines referencing non-existent orders, indicating:
+  - Broken transactional records
+  - Deleted or corrupted parent rows
+  - ETL or ingestion inconsistencies
+
+  This is critical for transactional accuracy.
+
+- 04_fk_orderdetails_products.sql
+
+  Validates:
+  ```
+  orderdetails.productCode  →  products.productCode
+
+  ```
+  Identifies order lines that reference products not present in the product catalog.
+  Common causes include:
+  - Legacy data
+  - Incorrect product imports
+  - Orphaned rows due to data deletions
+
+  Ensures catalog integrity and consistency in SKU-level reporting.
+
+- 05_fk_employees_reporting.sql
+
+  Evaluates the hierarchical integrity of the employee structure:
+  ```
+  employees.reportsTo  →  employees.employeeNumber
+
+  ```
+  Detects employees assigned to non-existent managers, which may reveal:
+  - Broken org charts
+  - Incorrect HR data
+  - Incomplete employee onboarding/inactivation processes
+
+  This is essential for sales hierarchy analysis, commission structures, and HR reporting.
+
+- 06_fk_customers_salesrep.sql
+
+  Validates assignment of customers to sales representatives:
+  ```
+  customers.salesRepEmployeeNumber  →  employees.employeeNumber
+
+  ```
+  Detects customers assigned to missing or invalid reps, indicating:
+  - CRM inconsistencies
+  - Personnel turnover not reflected in the data
+  - Structural gaps in account ownership
+
+  Ensures the dataset supports reliable commercial analytics and segmentation.
+
+## Module Objective
+
+This module is designed to answer core questions about structural data health:
+- Are mandatory fields populated?
+- Are primary keys unique and reliable?
+- Are transactional tables correctly linked to their parent dimensions?
+- Are hierarchies and reporting chains intact?
+- Are account ownership and sales rep assignments valid?
+
+By validating completeness, uniqueness, and referential integrity, this module enables:
+- confidence in downstream analysis
+- prevention of cascading data issues
+- governance-aligned quality assurance
+- reliable business metrics and dashboards
+
+It represents the baseline quality floor required before deeper descriptive, analytical, or diagnostic insights.
