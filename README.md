@@ -97,6 +97,7 @@ Customers assigned to active sales reps consistently generate higher revenue and
 Lag/lead time-series analysis reveals consistent patterns ideal for forecasting inventory and promotions.
 
 Insights Deep Dive
+
 Category 1 — Customer & Geographic Insights
   - Revenue is heavily concentrated in top markets (Western Europe and North America).
   - NTILE segmentation identifies bottom-quartile countries with very low revenue → strategic expansion candidates.
@@ -150,3 +151,4 @@ Based on the findings:
 4. Revenue calculations assumed quantityOrdered * priceEach as the authoritative metric.
 5. Historical sales were not adjusted for inflation or currency effects.
 6. Predictive features provide signals, not full ML model predictions.
+
