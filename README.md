@@ -36,11 +36,11 @@ Insights and recommendations are provided on four key areas:
 
 The SQL queries used for exploration, cleaning, analysis, and modeling are organized in:
 
-- descriptive — data exploration, KPIs, completeness, uniqueness, and integrity checks
-- analytical — deep dives by country, region, product, customer, and sales rep
-- diagnostic — anomaly detection, outliers, misalignment, and risk analysis
-- predictive — RFM scoring, demand trends, next-order estimation, time-series features, cross-sell
-- structural — organizational hierarchy, office–territory mapping, coverage structure
+- descriptive/data quality (what is happening/Completeness, Uniqueness & Referential Integrity) — data exploration, KPIs, completeness, uniqueness, and integrity checks
+- analytical (Why is it happening?) — deep dives by country, region, product, customer, and sales rep
+- diagnostic (What went wrong / stands out?) — anomaly detection, outliers, misalignment, and risk analysis
+- predictive (What might happen next?) — RFM scoring, demand trends, next-order estimation, time-series features, cross-sell
+- structural (How is the system organized?) — organizational hierarchy, office–territory mapping, coverage structure
 
 Each module contains production-grade SQL with documentation, window functions, CTEs, recursive queries, advanced aggregations, and business logic embedded directly in SQL.
 
@@ -151,4 +151,5 @@ Based on the findings:
 4. Revenue calculations assumed quantityOrdered * priceEach as the authoritative metric.
 5. Historical sales were not adjusted for inflation or currency effects.
 6. Predictive features provide signals, not full ML model predictions.
+
 
