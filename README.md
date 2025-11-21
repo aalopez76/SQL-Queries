@@ -1,186 +1,152 @@
-# SQL Queries: From Fundamental to Advanced
+## SQL Queries: From Fundamental to Advanced
 
-A complete SQL portfolio project: descriptive, analytical, diagnostic, predictive & structural analysis.
+A complete end-to-end SQL analytics project: descriptive, analytical, diagnostic, predictive, and structural analysis.
 
 ### Project Background
 
-This project analyzes the operational and commercial performance of *Toys & Models Co.*, a global distributor of collectible cars, motorcycles, planes, and scale models.
+This project analyzes the operational, commercial, and organizational performance of Toys & Models Co., a global distributor of collectible scale models.
+The analysis is performed entirely with SQL, following a professional multi-layer analytics framework.
 
-The company operates in the wholesale/retail hobbyist industry, serving customers across North America, Europe, and APAC. Its business model revolves around:
+The company operates across North America, Europe, and APAC, maintaining:
+- A global product catalog (cars, motorcycles, aircraft, ships)
+- A sales-rep–driven B2B commercial structure
+- Regionally distributed offices
+- A diverse customer base
+- Multi-stage order processing
+- Credit- and payment-dependent workflows.
 
-- Selling scale-model products (cars, planes, ships, motorcycles)
-- Managing customer orders & payments
-- Distributing inventory worldwide from regional offices
-- A B2B commercial structure (customers have assigned sales representatives)
-- Product-centric revenue driven by seasonal demand
+The SQL work in this project builds a comprehensive view of sales, customers, products, operations, data quality, risk, forecasting signals, and organizational structure, all from the perspective of a senior data analyst/data scientist.
 
 From the perspective of a data scientist, this project evaluates:
-
-- Sales performance
-- Customer behavior
-- Product demand patterns
-- Operational quality & data integrity
-- Organizational structure
-- Forecasting-ready datasets
+- Sales performance & revenue distribution
+- Customer behavior, engagement, and value
+- Product demand cycles, seasonality, and portfolio concentration
+- Geographic patterns & regional variation
+- Sales representative performance & workload
+- Data quality, integrity, and referential consistency
+- Organizational hierarchy, office structure, and coverage
+- Predictive-ready features for forecasting and customer retention
 
 Insights and recommendations are provided on four key areas:
 
-- Category 1: Customer & Geographic Insights
-- Category 2: Product & Sales Performance
-- Category 3: Operational Quality & Data Integrity
-- Category 4: Employee & Organizational Structure
+1. Customer & Geographic Insights
+2. Product & Sales Performance
+3. Operational Quality & Data Integrity
+4. Employee Performance & Organizational Structure
 
 The SQL queries used for exploration, cleaning, analysis, and modeling are organized in:
-- descriptive
-- analytical
-- diagnostic
-- predictive
-- structural
 
----
-### Data Structure & Initial Checks
-The database contains detailed information about employees, products, orders, customers, and payments — forming a realistic business ecosystem suitable for relational data modeling and advanced SQL querying.
+- descriptive — data exploration, KPIs, completeness, uniqueness, and integrity checks
+- analytical — deep dives by country, region, product, customer, and sales rep
+- diagnostic — anomaly detection, outliers, misalignment, and risk analysis
+- predictive — RFM scoring, demand trends, next-order estimation, time-series features, cross-sell
+- structural — organizational hierarchy, office–territory mapping, coverage structure
 
-The main database contains 8 tables, with a total of:
+Each module contains production-grade SQL with documentation, window functions, CTEs, recursive queries, advanced aggregations, and business logic embedded directly in SQL.
 
+## Data Structure & Initial Checks
+
+The dataset contains detailed relational information on customers, products, orders, payments, offices, and employees.
+A full set of data quality checks (nulls, duplicates, FK integrity, hierarchy integrity) confirms the dataset is well-structured with a few minor issues (e.g., missing rep assignments, orphan order details).
+
+Database Schema
+
+![Database Schema](img/toys_and_models-db.png)
+
+The schema includes:
+- customers — customer details, assigned sales reps, credit limits
+- employees — hierarchical reporting chain, job roles
+- offices — geographic distribution of sales offices
+- orders — order-level metadata
+- orderdetails — line-item transactional detail
+- payments — customer payments
+- products — catalog & pricing
+- productlines — category grouping
+
+Totals:
 - 122 customers
 - 23 employees
-- 7 product lines
 - 110 products
 - 326 orders
 - 2,994 order details
 - 273 payments
+- 7 product lines
 - 7 offices
-
-#### Database Schema
-
-![Database Schema](img/toys_and_models-db.png)
-
-- Table: customers (122 rows)
-  - Customer details, sales representative, credit limit, location
-
-- Table: employees (23 rows)
-  - Employee info, job titles, reporting hierarchy
-
-- Table: offices (7 rows)
-  - Regional office locations & contact data
-
-- Table: orders (326 rows)
-  - Order header (dates, status, customer)
-
-- Table: orderdetails (2994 rows)
-  - Line item detail per order
-  - Core of revenue calculation
-
-- Table: payments (273 rows)
-  - Customer payment history
-
-- Table: products (110 rows)
-  - Product catalog & pricing
-
-- Table: productlines (7 rows)
-  - Product line grouping / descriptions
-
----
 
 ## Executive Summary
 Overview of Findings
 
-The analysis shows that revenue is highly concentrated in a small subset of top-performing products, with significant geographic variation across countries. Customer workload among sales representatives is unevenly distributed, and operational checks reveal minor data inconsistencies related to referential integrity and missing values. Monthly performance exhibits predictable seasonality that can be leveraged for forecasting however, orders that have not yet been paid can't be achieved because of the modelling of the database.
+Across all analysis layers, the business shows:
+- Highly concentrated sales among a small subset of products and customers
+- Geographic imbalance, with certain countries dominating revenue
+- Predictable seasonality, seen clearly through lag/lead trends
+- Uneven workload among sales representatives
+- Mostly clean data, with minor referential and assignment inconsistencies
+- Strong correlation between credit limit, purchase volume, and engagement
+- Clear organizational structure, with multi-level management and territorial coverage
 
-Three most important insights:
+Most important insights:
 
-- Sales are heavily concentrated: ~20% of products generate more than 60% of total revenue.
+1. Product concentration drives performance
+~20% of SKUs generate >60% of revenue, forming a clear “core portfolio.”
 
-- Geography matters: Certain countries consistently outperform others and show different purchasing patterns.
+2. Sales rep management impacts customer revenue
+Customers assigned to active sales reps consistently generate higher revenue and show lower recency gaps.
 
-- Sales reps have uneven customer loads, impacting performance, responsiveness, and operational balance.
+3. Demand shows strong monthly cycles
+Lag/lead time-series analysis reveals consistent patterns ideal for forecasting inventory and promotions.
 
----
-## Insights Deep Dive
-### Category 1 — Customer & Geographic Insights
+Insights Deep Dive
+Category 1 — Customer & Geographic Insights
+  - Revenue is heavily concentrated in top markets (Western Europe and North America).
+  - NTILE segmentation identifies bottom-quartile countries with very low revenue → strategic expansion candidates.
+  - Customers with larger credit limits place significantly larger or more frequent orders.
+  - Geographic contribution to total sales varies from <1% to >20% per country.
+  - Sales rep assignment directly increases customer revenue by 20–30%.
 
-Insight 1 — Country-level revenue concentration
-Deep-dive analyses show that a few countries contribute the majority of total revenue, with sales skewed heavily in favor of Western markets.
+Category 2 — Product & Sales Performance
+  - Top-selling products dominate revenue; bottom quartile contributes minimally.
+  - Monthly time-series features (lags, quartiles) show repeated spikes around specific months.
+  - Product lines show distinct patterns: some consistently growing, others declining.
+  - Quartile segmentation reveals which SKUs consistently outperform peers within each month.
+  - Cross-sell analysis identifies strong product pairings based on order co-occurrence.
 
-Insight 2 — Customer segmentation
-Customers with higher credit limits correspond to significantly larger order sizes, reinforcing a tiered purchasing behavior.
+Category 3 — Operational Quality & Data Integrity
+  - Outlier detection reveals bottom 5% and top 5% credit assignments → useful for risk & VIP identification.
+  - FK integrity checks find occasional orphan orderdetails → candidates for cleaning.
+  - Null checks reveal address and representative assignment gaps.
+  - Duplicate checks confirm primary key integrity across customers, orders, and products.
+  - Credit vs. sales misalignment (ratio-based) reveals accounts with disproportionate credit or low performance.
 
-Insight 3 — Assigned representative impact
-Customers with active sales representatives generate 20–30% more monthly revenue.
+Category 4 — Employee Performance & Organizational Structure
 
-Insight 4 — Country quartiles
-Using NTILE, bottom 25% countries generate negligible revenue → potential for targeted expansion campaigns.
+  - Sales reps differ widely in:
+    - total revenue
+    - assigned customers
+    - assigned countries
+    - ticket size
 
-### Category 2 — Product & Sales Performance
+  - Ranking and percentiles highlight top/bottom 5% performers.
+  - Recursive CTE reveals 3+ levels of management hierarchy.
+  - Office/territory mapping shows how customer coverage is distributed globally.
+  - Coverage maps reveal clear regional specialization among offices.
 
-Insight 1 — Best-selling products
-Ranking analysis reveals a clear top-10 group responsible for the largest sales share.
-
-Insight 2 — Monthly trends
-Specific products show seasonal spikes, especially high-ticket collectibles.
-
-Insight 3 — Lag/lead patterns
-Month-to-month comparisons reveal predictable demand cycles.
-
-Insight 4 — Quartile segmentation
-Products in quartile 4 consistently exhibit significantly higher margins and stock movement.
-
-### Category 3 — Operational Quality & Data Integrity
-
-Insight 1 — Outlier credit limits
-Bottom 5% and top 5% credit limits indicate potentially risky accounts and VIP clients.
-
-Insight 2 — Missing or duplicate keys
-Diagnostic checks show rare but notable missing foreign keys (FK issues in orders → customers).
-
-Insight 3 — Orphan records
-Some orderdetails rows reference non-existing orders → candidate for cleanup.
-
-Insight 4 — Null checks
-Several customer address fields contain missing values → useful for CRM cleanup.
-
-### Category 4 — Employee Performance & Organization
-
-Insight 1 — Sales rep ranking
-Some representatives outperform others by 2–3x based on customer portfolio size.
-
-Insight 2 — Workload distribution
-Workload is unevenly distributed, with some reps assigned >10 clients and others <3.
-
-Insight 3 — Outlier performance
-Top/bottom 5% performers identified via percentiles.
-
-Insight 4 — Organizational hierarchy
-Recursive CTE reveals a multi-level management chain useful for org charts and workload planning.
-
----
 ## Recommendations
 Based on the findings:
 
-1. Rebalance customer assignments to reduce sales rep overload.
-2. Expand sales focus to underperforming countries (bottom quartiles).
-3. Increase stock and promotion for top 10 products that drive the majority of revenue.
-4. Implement automated FK integrity checks to prevent orphan records.
-5. Use forecasting models (lag/lead datasets) to optimize inventory planning.
+1. Reassign customer portfolios to balance workload across sales reps.
+2. Increase focus on underperforming countries—bottom NTILE 25% could support targeted expansion efforts.
+3. Prioritize high-value SKUs for inventory planning and marketing.
+4. Automate FK integrity and null checks to prevent operational inconsistencies.
+5. Use predictive features (lags, trends, RFM) to support forecasting and customer retention strategies.
+6. Monitor high-risk customers using credit/sales ratios and recency thresholds.
+7. Leverage cross-sell product pairs for bundled promotions and upsell initiatives.
 
----
 ## Assumptions & Caveats
 
-1. Missing state or address fields were considered non-critical and left unaltered.
-2. Some outlier credit limits may represent legitimate VIP customers.
-3. Ship-date performance depends on data completeness; missing dates were excluded.
-4. Revenue calculations rely on quantityOrdered * priceEach from orderdetails as the source of truth.
-5. No inflation or currency adjustments were applied to historical order amounts.
-
-
-   
-   
-
-
-
-
-
-
-
-
+1. Missing address fields were treated as non-critical and excluded from analysis.
+2. High credit limits may reflect legitimate VIP or strategic customers.
+3. Shipping performance was evaluated only where dates were available.
+4. Revenue calculations assumed quantityOrdered * priceEach as the authoritative metric.
+5. Historical sales were not adjusted for inflation or currency effects.
+6. Predictive features provide signals, not full ML model predictions.
