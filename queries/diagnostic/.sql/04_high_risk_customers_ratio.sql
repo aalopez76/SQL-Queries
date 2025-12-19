@@ -109,6 +109,14 @@ SELECT
         WHEN sales_to_credit_ratio >= 2 AND creditLimit > 0 THEN 'LOW CREDIT / HIGH SALES'
     END AS ratioFlag,
 
+    -- Align with Pandas identify_high_risk_customers(): amount_at_risk
+    ROUND(
+        CASE
+            WHEN (credit_to_sales_ratio >= 2 AND totalSales > 0) THEN creditLimit
+            ELSE totalSales
+        END
+    , 2) AS amount_at_risk,
+
     'HIGH RISK CUSTOMER' AS riskCategory
 
 FROM CustomerRatios
@@ -126,3 +134,4 @@ ORDER BY
     country,
     daysSinceLastOrder DESC,
     customerName;
+	

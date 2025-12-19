@@ -1,21 +1,21 @@
 -- 02_duplicate_checks.sql
--- Purpose:
---   Detect duplicated primary keys across core business tables.
+-- Purpose: Detect duplicated primary keys across core business tables in a single execution.
 
--- Duplicates in customers (customerNumber should be unique)
-SELECT customerNumber, COUNT(*) AS cnt
+SELECT 'Customer' AS table_name, customerNumber AS duplicate_id, COUNT(*) AS occurrences
 FROM customers
 GROUP BY customerNumber
-HAVING cnt > 1;
+HAVING occurrences > 1
 
--- Duplicates in orders (orderNumber should be unique)
-SELECT orderNumber, COUNT(*) AS cnt
+UNION ALL
+
+SELECT 'Order' AS table_name, orderNumber AS duplicate_id, COUNT(*) AS occurrences
 FROM orders
 GROUP BY orderNumber
-HAVING cnt > 1;
+HAVING occurrences > 1
 
--- Duplicates in products (productCode should be unique)
-SELECT productCode, COUNT(*) AS cnt
+UNION ALL
+
+SELECT 'Product' AS table_name, productCode AS duplicate_id, COUNT(*) AS occurrences
 FROM products
 GROUP BY productCode
-HAVING cnt > 1;
+HAVING occurrences > 1;

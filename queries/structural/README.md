@@ -80,7 +80,7 @@ They are about relationships, hierarchies, and coverage mapping across:
 
   What it shows:
   - Office-level attributes: officeCode, territory, officeCountry, officeCity
-  - Sales rep attributes: employeeNumber, salesRepName, jobTitle
+  - Sales rep attributes: employeeNumber, employeeName, jobTitle
   - Customer attributes: customerNumber, customerName, customerCountry, customerCity
 
   Use cases:

@@ -1,6 +1,6 @@
 SELECT
     e.employeeNumber,
-    e.firstName || ' ' || e.lastName AS salesRepName,
+    e.firstName || ' ' || e.lastName AS employeeName,
     COUNT(c.customerNumber) AS numCustomers
 FROM employees e
 JOIN customers c

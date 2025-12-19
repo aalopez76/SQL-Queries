@@ -10,11 +10,12 @@
 --        - support = cooccurrence_count / total_orders
 --        - confidence_from_p1 = cooccurrence_count / orders_with_product1
 --        - confidence_from_p2 = cooccurrence_count / orders_with_product2
+--        - expected_cooccurrence = (product1_orders * product2_orders) / total_orders
+--        - lift = cooccurrence_count / expected_cooccurrence
 --   5) Optionally filter by minimum co-occurrence count.
 --
 -- Dataset: toys_and_models.sqlite
 
--- 1) Unique product per order
 WITH OrderProducts AS (
     SELECT DISTINCT
         od.orderNumber,
@@ -22,23 +23,19 @@ WITH OrderProducts AS (
     FROM orderdetails od
 ),
 
--- 2) Total number of distinct orders
 TotalOrders AS (
     SELECT COUNT(DISTINCT orderNumber) AS total_orders
     FROM OrderProducts
 ),
 
--- 3) Number of orders per product
 ProductOrderCounts AS (
     SELECT
         productCode,
         COUNT(DISTINCT orderNumber) AS product_orders
     FROM OrderProducts
-    GROUP BY
-        productCode
+    GROUP BY productCode
 ),
 
--- 4) Product pairs per order (co-occurrence)
 ProductPairs AS (
     SELECT
         op1.productCode AS productCode1,
@@ -47,13 +44,12 @@ ProductPairs AS (
     FROM OrderProducts op1
     JOIN OrderProducts op2
         ON op1.orderNumber = op2.orderNumber
-       AND op1.productCode < op2.productCode  -- avoid duplicates and self-pairs
+       AND op1.productCode < op2.productCode
     GROUP BY
         op1.productCode,
         op2.productCode
 ),
 
--- 5) Join with product-level counts and total orders
 PairsWithStats AS (
     SELECT
         pp.productCode1,
@@ -70,7 +66,6 @@ PairsWithStats AS (
     CROSS JOIN TotalOrders t
 ),
 
--- 6) Attach product names
 PairsWithNames AS (
     SELECT
         pw.productCode1,
@@ -88,12 +83,13 @@ PairsWithNames AS (
         ON pw.productCode2 = p2.productCode
 )
 
--- 7) Final metrics and optional filtering
 SELECT
-    productCode1,
-    productName1,
-    productCode2,
-    productName2,
+    -- Rename to match the Pandas/Pages expectations
+    productCode1 AS productCode_1,
+    productName1 AS productName_1,
+    productCode2 AS productCode_2,
+    productName2 AS productName_2,
+
     cooccurrence_count,
     product1_orders,
     product2_orders,
@@ -105,10 +101,19 @@ SELECT
     ROUND(1.0 * cooccurrence_count / product1_orders, 4) AS confidence_from_p1,
 
     -- P(product1 | product2)
-    ROUND(1.0 * cooccurrence_count / product2_orders, 4) AS confidence_from_p2
+    ROUND(1.0 * cooccurrence_count / product2_orders, 4) AS confidence_from_p2,
+
+    -- Align with aggregations.py: expected_cooccurrence & lift
+    ROUND(1.0 * product1_orders * product2_orders / NULLIF(total_orders, 0), 4) AS expected_cooccurrence,
+
+    ROUND(
+        1.0 * cooccurrence_count /
+        NULLIF(1.0 * product1_orders * product2_orders / NULLIF(total_orders, 0), 0)
+    , 4) AS lift
+
 FROM PairsWithNames
 WHERE
-    cooccurrence_count >= 3  -- minimum co-occurrences threshold (adjust as needed)
+    cooccurrence_count >= 3
 ORDER BY
     support DESC,
     cooccurrence_count DESC;

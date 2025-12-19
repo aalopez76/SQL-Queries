@@ -15,7 +15,7 @@ SELECT
     o.city          AS officeCity,
     o.officeCode,
     e.employeeNumber,
-    e.firstName || ' ' || e.lastName AS salesRepName,
+    e.firstName || ' ' || e.lastName AS employeeName,
     e.jobTitle,
 
     c.customerNumber,
@@ -31,5 +31,5 @@ ORDER BY
     o.territory,
     officeCountry,
     officeCity,
-    salesRepName,
+    employeeName,
     customerName;

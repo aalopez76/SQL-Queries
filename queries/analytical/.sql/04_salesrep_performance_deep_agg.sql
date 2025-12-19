@@ -15,7 +15,7 @@
 WITH SalesRepBase AS (
     SELECT
         e.employeeNumber,
-        e.firstName || ' ' || e.lastName        AS salesRepName,
+        e.firstName || ' ' || e.lastName        AS employeeName,
         e.jobTitle,
         e.officeCode,
         oof.country                              AS office_country,
@@ -41,7 +41,7 @@ WITH SalesRepBase AS (
 SalesRepAgg AS (
     SELECT
         employeeNumber,
-        salesRepName,
+        employeeName,
         jobTitle,
         officeCode,
         office_country,
@@ -58,7 +58,7 @@ SalesRepAgg AS (
     FROM SalesRepBase
     GROUP BY
         employeeNumber,
-        salesRepName,
+        employeeName,
         jobTitle,
         officeCode,
         office_country,
@@ -69,7 +69,7 @@ SalesRepAgg AS (
 SalesRepEnriched AS (
     SELECT
         employeeNumber,
-        salesRepName,
+        employeeName,
         jobTitle,
         officeCode,
         office_country,
@@ -113,7 +113,7 @@ SalesRepEnriched AS (
 SalesRepRanked AS (
     SELECT
         employeeNumber,
-        salesRepName,
+        employeeName,
         jobTitle,
         officeCode,
         office_country,
@@ -150,7 +150,7 @@ SalesRepRanked AS (
 -- 5) Final output with ABC classification based on cumulative % of sales
 SELECT
     employeeNumber,
-    salesRepName,
+    employeeName,
     jobTitle,
     officeCode,
     office_country,

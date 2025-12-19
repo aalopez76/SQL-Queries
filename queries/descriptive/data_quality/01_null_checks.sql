@@ -1,26 +1,18 @@
 -- 01_null_checks.sql
--- Purpose:
---   Identify missing (NULL) values in key business-critical fields.
+-- Purpose: Identify missing values in key fields across tables in one single result
 
--- Nulls in customer fields
-SELECT *
+SELECT 'Customer' AS table_name, customerNumber AS record_id, 'Missing Critical Info' AS issue
 FROM customers
-WHERE customerNumber IS NULL
-   OR customerName IS NULL
-   OR creditLimit IS NULL;
+WHERE customerNumber IS NULL OR customerName IS NULL OR creditLimit IS NULL
 
--- Nulls in order fields
-SELECT *
+UNION ALL
+
+SELECT 'Order' AS table_name, orderNumber AS record_id, 'Missing Critical Info' AS issue
 FROM orders
-WHERE orderNumber IS NULL
-   OR customerNumber IS NULL
-   OR orderDate IS NULL
-   OR status IS NULL;
+WHERE orderNumber IS NULL OR customerNumber IS NULL OR orderDate IS NULL OR status IS NULL
 
--- Nulls in employee fields
-SELECT *
+UNION ALL
+
+SELECT 'Employee' AS table_name, employeeNumber AS record_id, 'Missing Critical Info' AS issue
 FROM employees
-WHERE employeeNumber IS NULL
-   OR lastName IS NULL
-   OR firstName IS NULL
-   OR jobTitle IS NULL;
+WHERE employeeNumber IS NULL OR lastName IS NULL OR firstName IS NULL OR jobTitle IS NULL;
