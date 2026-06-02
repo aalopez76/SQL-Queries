@@ -45,13 +45,15 @@ The approach is fully descriptive and focused on producing key KPIs that serve a
   - Average order value (ticket size)
   - Ranking by sales volume
 
-- 06_customer_salesrep_map.sql
+- 06_customer_salesrep_map*.sql — Relationship between customers and sales representatives.
 
-  Relationship between customers and sales representatives. Includes:
+  This step is split into **three complementary queries** (not versions of the same query);
+  each answers a different question about the customer–representative relationship:
 
-  - Customers without an assigned representative
-  - Customer count per representative
-  - Ordered customer–representative mapping
+  - `06_customer_salesrep_map.sql` — Customers **without** an assigned representative
+    (`salesRepEmployeeNumber IS NULL`). Surfaces the coverage gap.
+  - `06_customer_salesrep_map_01.sql` — **Customer count per representative** (sales-rep workload).
+  - `06_customer_salesrep_map_02.sql` — **Ordered customer → representative mapping** (full directory).
 
 - 07_order_size_unique_products.sql
 

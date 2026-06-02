@@ -49,11 +49,11 @@ cliente recibía el peor score); demostrado con datos y arreglado (mejor cliente
 `rfm_score=4` a `15`). Observaciones menores documentadas (05: medias ignoran meses sin venta;
 08: comentarios vestigiales a un `aggregations.py` inexistente).
 
-### [ ] P1.4 — Resolver el duplicado customer_salesrep_map
-**Problema** (`handoff.md` §7.3): `06_customer_salesrep_map.sql` coexiste con `_01` y `_02` en
-`queries/01.descriptive/sql/`.
-**Acción:** decidir si los tres son necesarios; si `_01/_02` son iteraciones, consolidar y eliminar.
-**Hecho cuando:** no hay consultas redundantes sin justificación documentada en el README del módulo.
+### [x] P1.4 — Resolver el duplicado customer_salesrep_map ✅ 2026-06-01
+**Resuelto:** los tres archivos **no son duplicados** — son consultas complementarias (clientes sin
+comercial / nº de clientes por comercial / mapeo cliente→comercial). No se elimina ninguno; se
+documentó explícitamente el propósito de cada uno en `queries/01.descriptive/README.md`, dejando claro
+que no son versiones. (Renombrar se descartó para no tocar las 3 imágenes y referencias asociadas.)
 
 ---
 
