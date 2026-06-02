@@ -53,8 +53,8 @@
   aplicados por las skills.
 - **Calidad de datos (verificada el 2026-06-01 con `scripts/validate_db.ps1`):** 8 tablas,
   **0 huérfanos** en las 5 FKs comprobadas. La BD está íntegra.
-- **Deuda técnica:** baja. La reorganización git ya está cerrada (commit `03e9cb9`). Pendiente
-  principal: sqlfluff sin instalar (hook/lint inactivos hasta entonces) y conciliar totales del README — ver §7.
+- **Deuda técnica:** baja. Reorganización git cerrada (`03e9cb9`) y totales del README conciliados (P0.2).
+  Pendiente principal: sqlfluff sin instalar (hook/lint inactivos hasta entonces) — ver §7.
 
 ---
 
@@ -253,9 +253,10 @@ sqlfluff fix  queries --dialect sqlite
    en `01.descriptive/sql/`. Revisar si los tres son necesarios o si `_01/_02` son iteraciones.
 4. **El binario `.sqlite` está versionado en git.** Aceptable por su tamaño (300 KB) y por ser el
    dataset de referencia de un portafolio, pero implica que cualquier cambio de datos ensucia el diff.
-5. **Conteos del dataset:** el README cita totales (p. ej. 326 orders, 2.994 orderdetails) que difieren
-   de los reales en la BD actual (283 orders, 2.649 orderdetails). **Falso supuesto documentado:** el
-   README quedó desactualizado respecto a la BD. Conciliar antes de presentar el portafolio.
+5. ~~**Conteos del dataset desactualizados.**~~ ✅ **Resuelto** (P0.2, 2026-06-01): los totales del
+   README se conciliaron con la BD real — orders 326→283, order details 2.994→2.649, payments 273→249
+   (customers, employees, products, productlines y offices ya coincidían). Esta BD es un **subconjunto**
+   del classicmodels canónico, de ahí la diferencia.
 
 ---
 
@@ -263,9 +264,9 @@ sqlfluff fix  queries --dialect sqlite
 
 > No existen `docs/REFACTOR_PLAN.md` ni `docs/TODO.md`. Esta lista se deriva de `AUDIT.md` y del estado real.
 
-**Prioridad alta**
+**Prioridad alta** — ✅ todas completadas
 1. ~~**Cerrar la reorganización en git**~~ ✅ Hecho (commit `03e9cb9`, 2026-06-01).
-2. **Conciliar el README con la BD real** (totales de orders/orderdetails desactualizados — §7.5). ← siguiente P0.
+2. ~~**Conciliar el README con la BD real**~~ ✅ Hecho (P0.2, 2026-06-01). Siguiente frente: las P1 (calidad).
 
 **Prioridad media** — delegables a skills
 3. `pip install sqlfluff` y ejecutar `sqlfluff lint queries --dialect sqlite`; corregir estilo.
@@ -288,10 +289,10 @@ sqlfluff fix  queries --dialect sqlite
 > ```
 >
 > Genera `docs/data_report.md` con esquema, nulos, cardinalidad e integridad reales. Es read-only
-> y te da el estado objetivo de los datos. Con esa línea base, ataca la siguiente P0 (§8.2):
-> **conciliar los totales del README con la BD real** (283 orders / 2.649 details, no 326 / 2.994).
+> y te da el estado objetivo de los datos. A partir de ahí, las P1 de calidad (§8): instalar sqlfluff
+> y pasar el lint (P1.1), y revisar las consultas predictivas con `/query_review` (P1.3).
 >
-> _(La reorganización git ya quedó cerrada en el commit `03e9cb9`.)_
+> _(Las dos P0 ya están cerradas: reorganización git `03e9cb9` y conciliación del README P0.2.)_
 
 ---
 

@@ -15,16 +15,13 @@
 **Resuelto:** commit `03e9cb9` — git detectó los 78 movimientos como *renames* al 100 %
 (incluido el typo `revenu`→`revenue` en `.sql` y `.png`). Working tree limpio.
 
-### [ ] P0.2 — Conciliar el README con la BD real
-**Problema** (`handoff.md` §7.5): el README cita 326 orders / 2.994 orderdetails; la BD real tiene
-283 orders / 2.649 orderdetails. Cifras desactualizadas en un documento de portafolio.
-**Acción**
-```powershell
-pwsh scripts/validate_db.ps1     # obtener los conteos reales por tabla
-```
-Actualizar la sección "Totals" de `README.md` con esos números. Revisar si algún insight del
-Executive Summary dependía de los totales antiguos.
-**Hecho cuando:** los totales del README coinciden con la salida de `validate_db.ps1`.
+### [x] P0.2 — Conciliar el README con la BD real ✅ 2026-06-01
+**Problema** (`handoff.md` §7.5): el README citaba 326 orders / 2.994 orderdetails / 273 payments;
+la BD real tiene 283 / 2.649 / 249. Cifras desactualizadas en un documento de portafolio.
+**Resuelto:** sección "Totals" de `README.md` actualizada con los conteos reales (verificados con
+`sqlite3`). Las demás cifras coincidían (customers 122, employees 23, products 110, productlines 7,
+offices 7). Los insights del Executive Summary son cualitativos/porcentuales y no dependían de los
+totales absolutos, por lo que no requirieron cambios. La BD es un subconjunto del classicmodels canónico.
 
 ---
 

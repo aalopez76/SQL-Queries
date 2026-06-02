@@ -67,9 +67,9 @@ Totals:
 - 122 customers
 - 23 employees
 - 110 products
-- 326 orders
-- 2,994 order details
-- 273 payments
+- 283 orders
+- 2,649 order details
+- 249 payments
 - 7 product lines
 - 7 offices
 

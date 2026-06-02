@@ -37,7 +37,7 @@ README.md  LICENSE  .gitignore
 ```
 
 Esquema de datos: 8 tablas (customers, employees, offices, orders, orderdetails,
-payments, products, productlines) · 122 clientes · 326 pedidos · 2.994 líneas.
+payments, products, productlines) · 122 clientes · 283 pedidos · 2.649 líneas.
 
 ## 4. Hallazgos relevantes
 
