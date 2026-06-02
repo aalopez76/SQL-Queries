@@ -152,4 +152,34 @@ Based on the findings:
 5. Historical sales were not adjusted for inflation or currency effects.
 6. Predictive features provide signals, not full ML model predictions.
 
+---
+
+## Reproducibility & Claude Code workspace
+
+This repo is configured as a professional Claude Code workspace (see `CLAUDE.md`).
+
+**Requirements**
+- `sqlite3` CLI (v3.51+) — already on the dev machine.
+- `sqlfluff` (optional, for lint/format): `pip install sqlfluff`.
+
+**Common commands** (PowerShell)
+```powershell
+# Validate the database (tables, row counts, FK orphans)
+pwsh scripts/validate_db.ps1
+
+# Run a query (read-only) against the SQLite DB
+pwsh scripts/run_query.ps1 -Query queries/01.descriptive/sql/03_business_overview.sql
+
+# Lint / format SQL (requires sqlfluff)
+sqlfluff lint queries --dialect sqlite
+sqlfluff fix  queries --dialect sqlite
+```
+
+**Claude Code skills**
+- `/data_validation data/toys_and_models.sqlite` → schema/integrity report in `docs/data_report.md`.
+- `/query_review <file.sql>` → correctness + dialect + performance + style verdict.
+
+Quality thresholds live in `configs/thresholds.yaml`. A `PostToolUse` hook
+(`.claude/settings.json`) auto-formats `.sql` files with sqlfluff when it is installed.
+
 

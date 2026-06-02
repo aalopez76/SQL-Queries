@@ -1,0 +1,38 @@
+# thresholds.yaml — umbrales de calidad para sql-analytics-portfolio
+# Consumido por las skills data_validation y query_review.
+
+# --- Validación de datos (skill: data_validation) ---
+data_quality:
+  max_null_pct: 0.20          # % máximo de nulos tolerado por columna antes de marcar 🔴
+  low_cardinality_max: 20     # nº de distintos por debajo del cual una columna es "categórica"
+  iqr_multiplier: 1.5         # factor para detección de outliers por regla de cuartiles
+  forbid_negative_in:         # columnas donde un valor negativo es siempre un error
+    - creditLimit
+    - quantityOrdered
+    - priceEach
+    - amount
+    - buyPrice
+    - MSRP
+  expected_tables:            # tablas que deben existir (esquema classicmodels)
+    - customers
+    - employees
+    - offices
+    - orders
+    - orderdetails
+    - payments
+    - products
+    - productlines
+
+# --- Revisión de consultas (skill: query_review) ---
+query_quality:
+  max_lines: 150              # longitud máxima razonable de un script .sql
+  max_subquery_depth: 3       # anidamiento de subconsultas antes de exigir CTEs
+  require_header_comment: true        # cada .sql debe empezar con un comentario de propósito
+  require_uppercase_keywords: true    # SELECT/FROM/WHERE en mayúsculas
+  forbid_select_star_in_aggregations: true
+  blocking:                   # incumplir esto => dictamen "necesita revisión"
+    - executes_without_error  # la consulta debe correr en SQLite sin error
+    - sqlite_compatible       # sin sintaxis de otros motores
+  sqlfluff:
+    dialect: sqlite
+    enabled_if_installed: true

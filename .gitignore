@@ -1,0 +1,26 @@
+# --- SQLite: ficheros temporales (NO ignoramos la BD .sqlite: es el dataset del portafolio) ---
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
+*.db-wal
+*.db-shm
+
+# --- sqlfluff / Python (host de las herramientas de lint) ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+.sqlfluff_cache/
+
+# --- Sistema operativo ---
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# --- Editores ---
+.vscode/
+.idea/
+*.swp
+
+# --- Salidas locales de validación (regenerables) ---
+docs/data_report.local.md
