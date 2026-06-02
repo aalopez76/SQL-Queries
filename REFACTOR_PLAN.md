@@ -35,12 +35,11 @@ exclusión de `capitalisation.identifiers` por el camelCase del esquema classicm
 4 archivos de exploración). **Lint final: 0 violaciones.** Las 39 consultas siguen ejecutando sin error.
 El hook PostToolUse queda operativo.
 
-### [ ] P1.2 — Generar la línea base de calidad de datos
-**Acción:** invocar la skill
-```
-/data_validation data/toys_and_models.sqlite
-```
-**Hecho cuando:** `docs/data_report.md` contiene esquema, nulos, cardinalidad e integridad reales.
+### [x] P1.2 — Generar la línea base de calidad de datos ✅ 2026-06-01
+**Resuelto:** `docs/data_report.md` poblado con el diagnóstico real (8 tablas, 59 columnas).
+Hallazgos: integridad perfecta (0 huérfanos en 8 FKs, 0 duplicados de PK, 0 valores negativos);
+nulos > 20 % solo en campos opcionales (addressLine2, state, comments, htmlDescription, image);
+22 clientes sin comercial asignado (segmento de negocio, no error). Dictamen: APROBADO con observaciones.
 
 ### [ ] P1.3 — Revisar las consultas predictivas (las más complejas)
 **Acción:** pasar la skill `/query_review` por las 8 consultas de `queries/04.predictive/sql/`
