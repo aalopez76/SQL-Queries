@@ -59,14 +59,16 @@ CustomerRFMScored AS (
         last_order_date,
         days_since_last_order,
 
-        -- Recency score: lower days_since_last_order → higher score
-        NTILE(5) OVER (ORDER BY days_since_last_order ASC) AS r_score,
+        -- Recency score: lower days_since_last_order → higher score (best = 5).
+        -- DESC + NULLS FIRST: customers with no orders (NULL recency) fall in the
+        -- worst bucket (1); the most recent customers land in bucket 5.
+        NTILE(5) OVER (ORDER BY days_since_last_order DESC NULLS FIRST) AS r_score,
 
-        -- Frequency score: more orders → higher score
-        NTILE(5) OVER (ORDER BY freq_orders DESC) AS f_score,
+        -- Frequency score: more orders → higher score (best = 5).
+        NTILE(5) OVER (ORDER BY freq_orders ASC) AS f_score,
 
-        -- Monetary score: higher total sales → higher score
-        NTILE(5) OVER (ORDER BY monetary DESC) AS m_score
+        -- Monetary score: higher total sales → higher score (best = 5).
+        NTILE(5) OVER (ORDER BY monetary ASC) AS m_score
     FROM CustomerRecency
 )
 

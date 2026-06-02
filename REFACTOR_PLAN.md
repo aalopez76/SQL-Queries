@@ -41,14 +41,13 @@ Hallazgos: integridad perfecta (0 huérfanos en 8 FKs, 0 duplicados de PK, 0 val
 nulos > 20 % solo en campos opcionales (addressLine2, state, comments, htmlDescription, image);
 22 clientes sin comercial asignado (segmento de negocio, no error). Dictamen: APROBADO con observaciones.
 
-### [ ] P1.3 — Revisar las consultas predictivas (las más complejas)
-**Acción:** pasar la skill `/query_review` por las 8 consultas de `queries/04.predictive/sql/`
-y archivar los dictámenes. Empezar por:
-```
-/query_review queries/04.predictive/sql/06_customer_rfm_score.sql
-/query_review queries/04.predictive/sql/07_customer_next_order_prediction.sql
-```
-**Hecho cuando:** las 8 consultas tienen dictamen *APROBADO* o sus hallazgos corregidos.
+### [x] P1.3 — Revisar las consultas predictivas (las más complejas) ✅ 2026-06-01
+**Resuelto:** las 8 consultas de `04.predictive` revisadas; dictámenes archivados en
+`docs/query_review_predictive.md`. 7/8 aprobadas directamente. **Bug corregido en
+`06_customer_rfm_score`:** las tres dimensiones `NTILE` tenían la dirección invertida (el mejor
+cliente recibía el peor score); demostrado con datos y arreglado (mejor cliente Euro+ pasa de
+`rfm_score=4` a `15`). Observaciones menores documentadas (05: medias ignoran meses sin venta;
+08: comentarios vestigiales a un `aggregations.py` inexistente).
 
 ### [ ] P1.4 — Resolver el duplicado customer_salesrep_map
 **Problema** (`handoff.md` §7.3): `06_customer_salesrep_map.sql` coexiste con `_01` y `_02` en
