@@ -1,6 +1,6 @@
 # Handoff — sql-analytics-portfolio
 
-> Documento de transferencia del proyecto. Generado: **2026-06-01**.
+> Documento de transferencia del proyecto. Generado: **2026-06-01** · Última actualización: **2026-06-02**.
 > Autor saliente: Senior Data Scientist (sesión Claude Code). Para: colega entrante / futura instancia de Claude Code.
 >
 > ⚠️ **Lee esto primero.** La plantilla de handoff asumía un proyecto **ML en Python** (DVC, MLflow,
@@ -15,6 +15,10 @@
 
 - **Nombre:** `sql-analytics-portfolio`
 - **Propietario:** aalopez (git user) · aalpzp@gmail.com
+- **Enlaces:**
+  - Repositorio: https://github.com/aalopez76/SQL-Queries
+  - Presentación pública (página personal): https://aalopez76.github.io/projects/SQL/ — es donde se
+    muestra el proyecto a visitantes; el foco es **presentación profesional**, no técnica (ver §11).
 - **Problema de negocio:** analizar el desempeño operativo, comercial y organizativo de
   *Toys & Models Co.*, distribuidor global de modelos a escala coleccionables (esquema *classicmodels*).
 - **Objetivo:** construir un portafolio de analítica SQL **multi-capa** de calidad profesional
@@ -32,7 +36,7 @@
 | Lenguaje | **SQL** (dialecto **SQLite**: CTEs, window functions, recursivas, `strftime`) |
 | Motor / datos | **SQLite 3.51** — fichero único `data/toys_and_models.sqlite` (~300 KB) |
 | Runner | binario `sqlite3` CLI (verificado: v3.51.0) |
-| Lint / formato | **sqlfluff** (dialect `sqlite`) — *opcional*, requiere `pip install sqlfluff` (**NO instalado** aún) |
+| Lint / formato | **sqlfluff 4.2.1** (dialect `sqlite`) — instalado; config en `.sqlfluff`; lint en 0 violaciones |
 | Host runtime | Python 3.11.9 — **solo** como host de sqlfluff; el proyecto no tiene código Python |
 | Gestor de dependencias | **N/A** — no hay `pyproject.toml`/`requirements.txt`; nada que instalar salvo sqlfluff |
 | Tracking de experimentos (MLflow) | **N/A** — no se entrenan modelos |
@@ -45,9 +49,11 @@
 
 - **Fase:** portafolio **funcional y pulido** en consolidación. No es software en producción;
   no hay despliegue ni servicio. "Producción" aquí = el repositorio público presentable.
-- **Último hito:** **P1 completada** (2026-06-01) — lint sqlfluff (`aea3dfa`), línea base de calidad
-  (`1844966`), review predictivas + fix RFM (`fec4706`) y documentación del trío salesrep (este commit).
-  Base del workspace en `03e9cb9`; conciliación README en `0cfd0ed`. (Commit previo: `c4d86cf`, 2025-12-18.)
+- **Último hito:** **sincronizado con GitHub** (2026-06-02). Merge `247df23` integró los 7 commits
+  locales (workspace + P0 + P1) con 2 commits remotos (`update queries`, `Delete img/Shema`) y se hizo
+  push a `origin/main`. Local y remoto están al día. P1 completada el 2026-06-01 — lint sqlfluff
+  (`aea3dfa`), línea base de calidad (`1844966`), review predictivas + fix RFM (`fec4706`), trío
+  salesrep (`44133f8`); base del workspace en `03e9cb9`; conciliación README en `0cfd0ed`.
 - **Métricas del modelo / umbral de aceptación:** **N/A** — no hay modelo. El equivalente son los
   **umbrales de calidad** en `configs/thresholds.yaml` (máx. % nulos, compatibilidad SQLite, etc.),
   aplicados por las skills.
@@ -329,3 +335,50 @@ sqlfluff fix  queries --dialect sqlite
 - **No hay credenciales, secretos ni `.env`.** El proyecto es totalmente local: una BD SQLite de
   fichero sin autenticación. Si en el futuro se añade una fuente remota, usar `.env` (referenciado,
   nunca commiteado) o un gestor de secretos — jamás en texto plano en el repo.
+
+---
+
+## 11. Presentación pública (página personal)
+
+> Página: **https://aalopez76.github.io/projects/SQL/** (no es el repo; es el escaparate del proyecto).
+> Objetivo: **presentación profesional**, orientada a reclutadores/clientes — no un volcado técnico.
+> El detalle técnico vive en el repo; aquí se cuenta la **historia y el valor**.
+
+### Principio rector
+Vender **resultados e impacto de negocio**, no SQL. Un visitante debe entender en 30 segundos *qué
+problema se resolvió, qué se descubrió y qué capacidades demuestra*. El código es la prueba, no el
+protagonista (se enlaza, no se pega).
+
+### Estructura propuesta para enriquecer la página
+
+1. **Titular + gancho (1 línea).** Ej.: *"Análisis SQL de extremo a extremo de un distribuidor global:
+   de la calidad del dato a señales predictivas de negocio."*
+2. **Contexto de negocio (2–3 frases).** Toys & Models Co., distribuidor global de modelos a escala;
+   122 clientes, 110 productos, 28 países. La pregunta: *¿dónde está el valor y dónde el riesgo?*
+3. **Enfoque en 5 capas (narrativa visual).** Descriptiva → Diagnóstica → Analítica → Predictiva →
+   Estructural. Una frase por capa; presentarlo como un *framework*, no como una lista de archivos.
+4. **Hallazgos clave (lo más vendible — usar números verificados):**
+   - **Concentración de ingresos:** ~20 % de los SKUs generan >60 % de los ingresos (portafolio núcleo).
+   - **Clientes de alto valor:** *Euro+ Shopping Channel* ($613.986, 20 pedidos) y *Mini Gifts* ($492.684)
+     lideran; segmentación **RFM** de los 122 clientes para retención/churn.
+   - **Rendimiento comercial:** brecha grande entre reps (top ~$962.660) → oportunidad de reasignar carteras.
+   - **Calidad de datos verificada:** 0 huérfanos en 8 relaciones FK, 0 duplicados de PK, 0 negativos indebidos.
+   - **Cross-sell:** análisis tipo *market basket* (support/confidence/lift) con cientos de pares de productos.
+5. **Capacidades técnicas demostradas (como *badges*, breve):** window functions, CTEs recursivas
+   (jerarquía organizativa), RFM y *lags* en SQL puro, NTILE/quartiles, market basket analysis.
+6. **Visualizaciones.** Reutilizar las capturas `queries/**/img/*.png` (ya existen) como galería.
+7. **Recomendaciones de negocio.** Las 7 del `README.md` (reasignar carteras, foco en países bottom-NTILE,
+   priorizar SKUs núcleo, automatizar checks de integridad, usar RFM/lags para retención, vigilar riesgo, cross-sell).
+8. **Cierre / CTA.** Enlace al repo (https://github.com/aalopez76/SQL-Queries) y al contacto.
+
+### Notas de tono
+- Cifras siempre **verificadas** (provienen de consultas reales — ver `docs/data_report.md` y
+  `docs/query_review_predictive.md`). No redondear de forma engañosa.
+- Mostrar **1–2 snippets** de SQL como muestra de oficio (p. ej. la CTE recursiva o el RFM), no más.
+- Mantener coherencia con el `README.md`, que ya tiene Executive Summary, Insights y Recommendations
+  listos para adaptar a un formato visual.
+
+### Estado / pendiente
+- **Pendiente (decisión del propietario):** redactar/maquetar el contenido enriquecido en la página.
+  Este handoff deja la **propuesta de estructura y los insights verificados**; falta llevarlo al
+  HTML/markdown de la página personal (repo aparte, no este).
