@@ -9,13 +9,14 @@ SELECT
 
     -- Promedio de ventas por cliente
     ROUND(
-        SUM(od.quantityOrdered * od.priceEach) 
-        / COUNT(DISTINCT c.customerNumber)
-    , 2) AS avg_sales_per_customer
+        SUM(od.quantityOrdered * od.priceEach)
+        / COUNT(DISTINCT c.customerNumber),
+        2
+    ) AS avg_sales_per_customer
 
-FROM customers c
-JOIN orders o ON c.customerNumber = o.customerNumber
-JOIN orderdetails od ON o.orderNumber = od.orderNumber
+FROM customers AS c
+INNER JOIN orders AS o ON c.customerNumber = o.customerNumber
+INNER JOIN orderdetails AS od ON o.orderNumber = od.orderNumber
 
 GROUP BY
     c.country

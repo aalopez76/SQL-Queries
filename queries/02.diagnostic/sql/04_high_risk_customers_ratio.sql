@@ -21,11 +21,11 @@ WITH CustomerActivity AS (
         c.creditLimit,
 
         COALESCE(SUM(od.quantityOrdered * od.priceEach), 0) AS totalSales,
-        MAX(o.orderDate)                                    AS lastOrderDate
-    FROM customers c
-    LEFT JOIN orders o
+        MAX(o.orderDate) AS lastOrderDate
+    FROM customers AS c
+    LEFT JOIN orders AS o
         ON c.customerNumber = o.customerNumber
-    LEFT JOIN orderdetails od
+    LEFT JOIN orderdetails AS od
         ON o.orderNumber = od.orderNumber
     GROUP BY
         c.customerNumber,
@@ -46,16 +46,16 @@ CustomerRecency AS (
         ca.*,
         g.maxOrderDate,
         CASE
-            WHEN ca.lastOrderDate IS NOT NULL
-                 AND g.maxOrderDate IS NOT NULL
+            WHEN
+                ca.lastOrderDate IS NOT NULL
+                AND g.maxOrderDate IS NOT NULL
                 THEN CAST(
-                    julianday(g.maxOrderDate) - julianday(ca.lastOrderDate)
+                    JULIANDAY(g.maxOrderDate) - JULIANDAY(ca.lastOrderDate)
                     AS INTEGER
                 )
-            ELSE NULL
         END AS daysSinceLastOrder
-    FROM CustomerActivity ca
-    CROSS JOIN GlobalMaxDate g
+    FROM CustomerActivity AS ca
+    CROSS JOIN GlobalMaxDate AS g
 ),
 
 -- 4) Compute credit/sales ratios
@@ -72,13 +72,11 @@ CustomerRatios AS (
         CASE
             WHEN totalSales > 0
                 THEN creditLimit * 1.0 / totalSales
-            ELSE NULL
         END AS credit_to_sales_ratio,
 
         CASE
             WHEN creditLimit > 0
                 THEN totalSales * 1.0 / creditLimit
-            ELSE NULL
         END AS sales_to_credit_ratio
     FROM CustomerRecency
     WHERE creditLimit IS NOT NULL
@@ -89,12 +87,12 @@ SELECT
     customerNumber,
     customerName,
     country,
-    ROUND(creditLimit, 2)              AS creditLimit,
-    ROUND(totalSales, 2)               AS totalSales,
+    ROUND(creditLimit, 2) AS creditLimit,
+    ROUND(totalSales, 2) AS totalSales,
     lastOrderDate,
     daysSinceLastOrder,
-    ROUND(credit_to_sales_ratio, 2)    AS credit_to_sales_ratio,
-    ROUND(sales_to_credit_ratio, 2)    AS sales_to_credit_ratio,
+    ROUND(credit_to_sales_ratio, 2) AS credit_to_sales_ratio,
+    ROUND(sales_to_credit_ratio, 2) AS sales_to_credit_ratio,
 
     CASE
         WHEN lastOrderDate IS NULL
@@ -114,8 +112,9 @@ SELECT
         CASE
             WHEN (credit_to_sales_ratio >= 2 AND totalSales > 0) THEN creditLimit
             ELSE totalSales
-        END
-    , 2) AS amount_at_risk,
+        END,
+        2
+    ) AS amount_at_risk,
 
     'HIGH RISK CUSTOMER' AS riskCategory
 
@@ -130,8 +129,7 @@ WHERE
     lastOrderDate IS NULL
     OR daysSinceLastOrder >= 180
 ORDER BY
-    riskCategory,
-    country,
+    riskCategory ASC,
+    country ASC,
     daysSinceLastOrder DESC,
-    customerName;
-	
+    customerName ASC;

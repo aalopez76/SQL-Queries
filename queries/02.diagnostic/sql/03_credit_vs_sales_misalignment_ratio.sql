@@ -25,10 +25,10 @@ WITH CustomerSales AS (
         c.country,
         c.creditLimit,
         COALESCE(SUM(od.quantityOrdered * od.priceEach), 0) AS totalSales
-    FROM customers c
-    LEFT JOIN orders o
+    FROM customers AS c
+    LEFT JOIN orders AS o
         ON c.customerNumber = o.customerNumber
-    LEFT JOIN orderdetails od
+    LEFT JOIN orderdetails AS od
         ON o.orderNumber = od.orderNumber
     GROUP BY
         c.customerNumber,
@@ -49,15 +49,13 @@ CustomerRatios AS (
         -- Credit-to-sales ratio: how many times credit exceeds realized sales
         CASE
             WHEN totalSales > 0
-            THEN creditLimit * 1.0 / totalSales
-            ELSE NULL
+                THEN creditLimit * 1.0 / totalSales
         END AS credit_to_sales_ratio,
 
         -- Sales-to-credit ratio: how many times sales exceed credit
         CASE
             WHEN creditLimit > 0
-            THEN totalSales * 1.0 / creditLimit
-            ELSE NULL
+                THEN totalSales * 1.0 / creditLimit
         END AS sales_to_credit_ratio
     FROM CustomerSales
     WHERE creditLimit IS NOT NULL
@@ -68,16 +66,18 @@ SELECT
     customerNumber,
     customerName,
     country,
-    ROUND(creditLimit, 2)          AS creditLimit,
-    ROUND(totalSales, 2)           AS totalSales,
+    ROUND(creditLimit, 2) AS creditLimit,
+    ROUND(totalSales, 2) AS totalSales,
     ROUND(credit_to_sales_ratio, 2) AS credit_to_sales_ratio,
     ROUND(sales_to_credit_ratio, 2) AS sales_to_credit_ratio,
     CASE
-        WHEN credit_to_sales_ratio >= 2
-             AND totalSales > 0
+        WHEN
+            credit_to_sales_ratio >= 2
+            AND totalSales > 0
             THEN 'HIGH CREDIT / LOW SALES (credit >= 2x sales)'
-        WHEN sales_to_credit_ratio >= 2
-             AND creditLimit > 0
+        WHEN
+            sales_to_credit_ratio >= 2
+            AND creditLimit > 0
             THEN 'LOW CREDIT / HIGH SALES (sales >= 2x credit)'
     END AS misalignmentCategory
 FROM CustomerRatios

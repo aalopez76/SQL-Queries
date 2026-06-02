@@ -32,8 +32,8 @@ WITH RECURSIVE EmployeeHierarchy AS (
         e.reportsTo,
         e.firstName || ' ' || e.lastName AS employeeName,
         h.level + 1 AS level
-    FROM employees e
-    JOIN EmployeeHierarchy h
+    FROM employees AS e
+    INNER JOIN EmployeeHierarchy AS h
         ON e.employeeNumber = h.reportsTo
 )
 
@@ -46,6 +46,6 @@ SELECT
         FROM employees
         WHERE employeeNumber = h.reportsTo
     ) AS managerName
-FROM EmployeeHierarchy h
+FROM EmployeeHierarchy AS h
 ORDER BY
     level DESC;   -- Top-level manager at bottom, starting employee at top

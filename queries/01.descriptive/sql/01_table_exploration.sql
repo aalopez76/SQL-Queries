@@ -1,16 +1,39 @@
-SELECT 'customers'    AS table_name, COUNT(*) AS n_rows FROM customers
+SELECT
+    'customers' AS table_name,
+    COUNT(*) AS n_rows
+FROM customers
 UNION ALL
-SELECT 'employees',   COUNT(*) FROM employees
+SELECT
+    'employees' AS table_name,
+    COUNT(*) AS n_rows
+FROM employees
 UNION ALL
-SELECT 'offices',     COUNT(*) FROM offices
+SELECT
+    'offices' AS table_name,
+    COUNT(*) AS n_rows
+FROM offices
 UNION ALL
-SELECT 'orderdetails',COUNT(*) FROM orderdetails
+SELECT
+    'orderdetails' AS table_name,
+    COUNT(*) AS n_rows
+FROM orderdetails
 UNION ALL
-SELECT 'orders',      COUNT(*) FROM orders
+SELECT
+    'orders' AS table_name,
+    COUNT(*) AS n_rows
+FROM orders
 UNION ALL
-SELECT 'payments',    COUNT(*) FROM payments
+SELECT
+    'payments' AS table_name,
+    COUNT(*) AS n_rows
+FROM payments
 UNION ALL
-SELECT 'productlines',COUNT(*) FROM productlines
+SELECT
+    'productlines' AS table_name,
+    COUNT(*) AS n_rows
+FROM productlines
 UNION ALL
-SELECT 'products',    COUNT(*) FROM products;
-
+SELECT
+    'products' AS table_name,
+    COUNT(*) AS n_rows
+FROM products;

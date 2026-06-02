@@ -5,14 +5,15 @@ WITH ProductMonthlySales AS (
     SELECT
         p.productCode,
         p.productName,
-        strftime('%Y-%m', o.orderDate) AS salesMonth,
+        STRFTIME('%Y-%m', o.orderDate) AS salesMonth,
         SUM(od.quantityOrdered * od.priceEach) AS totalSales
-    FROM orders o
-    JOIN orderdetails od ON o.orderNumber = od.orderNumber
-    JOIN products p ON p.productCode = od.productCode
+    FROM orders AS o
+    INNER JOIN orderdetails AS od ON o.orderNumber = od.orderNumber
+    INNER JOIN products AS p ON od.productCode = p.productCode
     GROUP BY
         p.productCode, p.productName, salesMonth
 )
+
 SELECT
     productCode,
     productName,

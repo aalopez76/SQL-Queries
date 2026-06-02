@@ -11,8 +11,8 @@
 
 SELECT
     o.territory,
-    o.country       AS officeCountry,
-    o.city          AS officeCity,
+    o.country AS officeCountry,
+    o.city AS officeCity,
     o.officeCode,
     e.employeeNumber,
     e.firstName || ' ' || e.lastName AS employeeName,
@@ -20,12 +20,12 @@ SELECT
 
     c.customerNumber,
     c.customerName,
-    c.country       AS customerCountry,
-    c.city          AS customerCity
-FROM offices o
-JOIN employees e
+    c.country AS customerCountry,
+    c.city AS customerCity
+FROM offices AS o
+INNER JOIN employees AS e
     ON o.officeCode = e.officeCode
-LEFT JOIN customers c
+LEFT JOIN customers AS c
     ON e.employeeNumber = c.salesRepEmployeeNumber
 ORDER BY
     o.territory,

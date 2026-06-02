@@ -22,10 +22,10 @@ WITH CustomerSales AS (
         c.country,
         c.creditLimit,
         COALESCE(SUM(od.quantityOrdered * od.priceEach), 0) AS totalSales
-    FROM customers c
-    LEFT JOIN orders o
+    FROM customers AS c
+    LEFT JOIN orders AS o
         ON c.customerNumber = o.customerNumber
-    LEFT JOIN orderdetails od
+    LEFT JOIN orderdetails AS od
         ON o.orderNumber = od.orderNumber
     GROUP BY
         c.customerNumber,
@@ -38,16 +38,15 @@ WITH CustomerSales AS (
 CountryProfile AS (
     SELECT
         country,
-        COUNT(*)                                 AS num_customers,
-        SUM(creditLimit)                         AS total_credit_limit,
-        SUM(totalSales)                          AS total_sales,
-        AVG(creditLimit)                         AS avg_credit_limit,
-        AVG(totalSales)                          AS avg_sales_per_customer,
+        COUNT(*) AS num_customers,
+        SUM(creditLimit) AS total_credit_limit,
+        SUM(totalSales) AS total_sales,
+        AVG(creditLimit) AS avg_credit_limit,
+        AVG(totalSales) AS avg_sales_per_customer,
         CASE
             WHEN SUM(totalSales) > 0
-            THEN (SUM(creditLimit) * 1.0 / SUM(totalSales))
-            ELSE NULL
-        END                                      AS credit_to_sales_ratio
+                THEN (SUM(creditLimit) * 1.0 / SUM(totalSales))
+        END AS credit_to_sales_ratio
     FROM CustomerSales
     WHERE creditLimit IS NOT NULL
     GROUP BY
@@ -61,12 +60,12 @@ CountryPercentiles AS (
         num_customers,
         total_credit_limit,
         total_sales,
-        ROUND(avg_credit_limit, 2)          AS avg_credit_limit,
-        ROUND(avg_sales_per_customer, 2)    AS avg_sales_per_customer,
-        ROUND(credit_to_sales_ratio, 4)     AS credit_to_sales_ratio,
+        ROUND(avg_credit_limit, 2) AS avg_credit_limit,
+        ROUND(avg_sales_per_customer, 2) AS avg_sales_per_customer,
+        ROUND(credit_to_sales_ratio, 4) AS credit_to_sales_ratio,
         NTILE(100) OVER (
             ORDER BY credit_to_sales_ratio
-        )                                   AS ratio_pct
+        ) AS ratio_pct
     FROM CountryProfile
     WHERE credit_to_sales_ratio IS NOT NULL
 )

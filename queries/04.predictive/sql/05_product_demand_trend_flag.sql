@@ -19,12 +19,12 @@ WITH MonthlyProductSales AS (
     SELECT
         p.productCode,
         p.productName,
-        strftime('%Y-%m', o.orderDate) AS salesMonth,
+        STRFTIME('%Y-%m', o.orderDate) AS salesMonth,
         SUM(od.quantityOrdered * od.priceEach) AS totalSales
-    FROM products p
-    JOIN orderdetails od
+    FROM products AS p
+    INNER JOIN orderdetails AS od
         ON p.productCode = od.productCode
-    JOIN orders o
+    INNER JOIN orders AS o
         ON od.orderNumber = o.orderNumber
     GROUP BY
         p.productCode,
@@ -39,15 +39,16 @@ MonthlyWithKey AS (
         productName,
         salesMonth,
         totalSales,
-        (CAST(substr(salesMonth, 1, 4) AS INTEGER) * 12
-         + CAST(substr(salesMonth, 6, 2) AS INTEGER)) AS month_key
+        (
+            CAST(SUBSTR(salesMonth, 1, 4) AS INTEGER) * 12
+            + CAST(SUBSTR(salesMonth, 6, 2) AS INTEGER)
+        ) AS month_key
     FROM MonthlyProductSales
 ),
 
 -- 3) Get the maximum month_key across the dataset
 GlobalMaxMonth AS (
-    SELECT
-        MAX(month_key) AS max_month_key
+    SELECT MAX(month_key) AS max_month_key
     FROM MonthlyWithKey
 ),
 
@@ -60,8 +61,8 @@ MonthlyWithLag AS (
         m.totalSales,
         m.month_key,
         (g.max_month_key - m.month_key) AS months_ago
-    FROM MonthlyWithKey m
-    CROSS JOIN GlobalMaxMonth g
+    FROM MonthlyWithKey AS m
+    CROSS JOIN GlobalMaxMonth AS g
 ),
 
 -- 5) Aggregate recent vs previous windows per product
@@ -91,7 +92,6 @@ ProductTrendMetrics AS (
         CASE
             WHEN prev_avg IS NOT NULL AND prev_avg > 0
                 THEN (recent_avg - prev_avg) / prev_avg
-            ELSE NULL
         END AS growth_rate
     FROM ProductTrendAgg
 )
@@ -101,7 +101,7 @@ SELECT
     productCode,
     productName,
     ROUND(recent_avg, 2) AS recent_avg_sales,
-    ROUND(prev_avg, 2)   AS prev_avg_sales,
+    ROUND(prev_avg, 2) AS prev_avg_sales,
     ROUND(growth_rate * 100.0, 2) AS growth_rate_pct,
     CASE
         WHEN growth_rate IS NULL THEN 'INSUFFICIENT_DATA'
@@ -111,5 +111,5 @@ SELECT
     END AS demand_trend_flag
 FROM ProductTrendMetrics
 ORDER BY
-    demand_trend_flag,
+    demand_trend_flag ASC,
     growth_rate_pct DESC;

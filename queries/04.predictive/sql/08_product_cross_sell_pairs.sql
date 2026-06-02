@@ -20,7 +20,7 @@ WITH OrderProducts AS (
     SELECT DISTINCT
         od.orderNumber,
         od.productCode
-    FROM orderdetails od
+    FROM orderdetails AS od
 ),
 
 TotalOrders AS (
@@ -40,11 +40,12 @@ ProductPairs AS (
     SELECT
         op1.productCode AS productCode1,
         op2.productCode AS productCode2,
-        COUNT(*)        AS cooccurrence_count
-    FROM OrderProducts op1
-    JOIN OrderProducts op2
-        ON op1.orderNumber = op2.orderNumber
-       AND op1.productCode < op2.productCode
+        COUNT(*) AS cooccurrence_count
+    FROM OrderProducts AS op1
+    INNER JOIN OrderProducts AS op2
+        ON
+            op1.orderNumber = op2.orderNumber
+            AND op1.productCode < op2.productCode
     GROUP BY
         op1.productCode,
         op2.productCode
@@ -58,12 +59,12 @@ PairsWithStats AS (
         p1.product_orders AS product1_orders,
         p2.product_orders AS product2_orders,
         t.total_orders
-    FROM ProductPairs pp
-    JOIN ProductOrderCounts p1
+    FROM ProductPairs AS pp
+    INNER JOIN ProductOrderCounts AS p1
         ON pp.productCode1 = p1.productCode
-    JOIN ProductOrderCounts p2
+    INNER JOIN ProductOrderCounts AS p2
         ON pp.productCode2 = p2.productCode
-    CROSS JOIN TotalOrders t
+    CROSS JOIN TotalOrders AS t
 ),
 
 PairsWithNames AS (
@@ -76,10 +77,10 @@ PairsWithNames AS (
         pw.product1_orders,
         pw.product2_orders,
         pw.total_orders
-    FROM PairsWithStats pw
-    JOIN products p1
+    FROM PairsWithStats AS pw
+    INNER JOIN products AS p1
         ON pw.productCode1 = p1.productCode
-    JOIN products p2
+    INNER JOIN products AS p2
         ON pw.productCode2 = p2.productCode
 )
 
@@ -107,9 +108,10 @@ SELECT
     ROUND(1.0 * product1_orders * product2_orders / NULLIF(total_orders, 0), 4) AS expected_cooccurrence,
 
     ROUND(
-        1.0 * cooccurrence_count /
-        NULLIF(1.0 * product1_orders * product2_orders / NULLIF(total_orders, 0), 0)
-    , 4) AS lift
+        1.0 * cooccurrence_count
+        / NULLIF(1.0 * product1_orders * product2_orders / NULLIF(total_orders, 0), 0),
+        4
+    ) AS lift
 
 FROM PairsWithNames
 WHERE

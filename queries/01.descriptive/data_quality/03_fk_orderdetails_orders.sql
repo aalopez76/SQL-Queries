@@ -3,10 +3,10 @@
 --   Identify orderdetails rows whose orderNumber does not exist in orders.
 --   (Missing parent order record)
 
-SELECT 
+SELECT
     od.orderNumber,
     od.productCode
-FROM orderdetails od
-LEFT JOIN orders o
+FROM orderdetails AS od
+LEFT JOIN orders AS o
     ON od.orderNumber = o.orderNumber
 WHERE o.orderNumber IS NULL;

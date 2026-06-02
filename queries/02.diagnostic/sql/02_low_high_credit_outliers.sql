@@ -29,7 +29,7 @@ SELECT
     percentile,
 
     CASE
-        WHEN percentile <= 5  THEN 'LOW-CREDIT OUTLIER (Bottom 5%)'
+        WHEN percentile <= 5 THEN 'LOW-CREDIT OUTLIER (Bottom 5%)'
         WHEN percentile >= 95 THEN 'HIGH-CREDIT OUTLIER (Top 5%)'
     END AS outlierCategory
 FROM CreditStats

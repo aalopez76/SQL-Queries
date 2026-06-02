@@ -20,8 +20,8 @@ WITH CustomerOrders AS (
             PARTITION BY c.customerNumber
             ORDER BY o.orderDate
         ) AS rn
-    FROM customers c
-    JOIN orders o
+    FROM customers AS c
+    INNER JOIN orders AS o
         ON c.customerNumber = o.customerNumber
 ),
 
@@ -38,7 +38,7 @@ OrderGaps AS (
             PARTITION BY cur.customerNumber
             ORDER BY cur.orderDate
         ) AS prev_order_date
-    FROM CustomerOrders cur
+    FROM CustomerOrders AS cur
 ),
 
 -- 3) Calculate gap in days
@@ -53,8 +53,7 @@ GapDays AS (
         prev_order_date,
         CASE
             WHEN prev_order_date IS NOT NULL
-            THEN CAST(julianday(orderDate) - julianday(prev_order_date) AS INTEGER)
-            ELSE NULL
+                THEN CAST(JULIANDAY(orderDate) - JULIANDAY(prev_order_date) AS INTEGER)
         END AS gap_days
     FROM OrderGaps
 ),
@@ -66,7 +65,7 @@ CustomerGapStats AS (
         customerName,
         country,
         MAX(orderDate) AS last_order_date,
-        AVG(gap_days)  AS avg_gap_days
+        AVG(gap_days) AS avg_gap_days
     FROM GapDays
     WHERE gap_days IS NOT NULL
     GROUP BY
@@ -84,8 +83,7 @@ SELECT
     ROUND(avg_gap_days, 1) AS avg_gap_days,
     CASE
         WHEN avg_gap_days IS NOT NULL
-        THEN date(last_order_date, '+' || CAST(avg_gap_days AS INTEGER) || ' days')
-        ELSE NULL
+            THEN DATE(last_order_date, '+' || CAST(avg_gap_days AS INTEGER) || ' days')
     END AS expected_next_order_date
 FROM CustomerGapStats
 ORDER BY

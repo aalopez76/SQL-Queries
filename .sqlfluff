@@ -1,0 +1,26 @@
+# Configuración de sqlfluff para sql-analytics-portfolio
+# Alineada con configs/thresholds.yaml (query_quality).
+[sqlfluff]
+dialect = sqlite
+max_line_length = 120
+# Reglas excluidas: ruido para un portafolio analítico (no son errores reales).
+#  - RF02/RF03: exigir cualificación de columnas con su tabla en todo join (verboso aquí).
+#  - AM04: prohíbe SELECT * sin known schema (lo usamos en exploración descriptiva).
+#  - ST06: ordena las columnas del SELECT por tipo (reescribiría consultas innecesariamente).
+# Nota: CP02 (capitalisation.identifiers) se excluye porque el esquema classicmodels usa
+# identificadores camelCase (customerNumber, orderNumber, ...) que no podemos renombrar.
+exclude_rules = references.qualification, references.consistent, ambiguous.column_count, structure.column_order, capitalisation.identifiers
+
+[sqlfluff:indentation]
+indent_unit = space
+tab_space_size = 4
+
+# Palabras clave SQL en MAYÚSCULAS (regla require_uppercase_keywords del proyecto).
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = upper
+
+[sqlfluff:rules:capitalisation.functions]
+extended_capitalisation_policy = upper
+
+[sqlfluff:rules:capitalisation.literals]
+capitalisation_policy = upper

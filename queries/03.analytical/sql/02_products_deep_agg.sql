@@ -17,17 +17,17 @@ WITH ProductAgg AS (
         p.productName,
 
         -- Core volume and value metrics
-        SUM(od.quantityOrdered * od.priceEach)          AS total_sales,
-        SUM(od.quantityOrdered)                         AS total_units,
-        COUNT(DISTINCT o.orderNumber)                   AS num_orders,
-        COUNT(DISTINCT c.customerNumber)                AS num_customers
+        SUM(od.quantityOrdered * od.priceEach) AS total_sales,
+        SUM(od.quantityOrdered) AS total_units,
+        COUNT(DISTINCT o.orderNumber) AS num_orders,
+        COUNT(DISTINCT c.customerNumber) AS num_customers
 
-    FROM products p
-    JOIN orderdetails od
+    FROM products AS p
+    INNER JOIN orderdetails AS od
         ON p.productCode = od.productCode
-    JOIN orders o
+    INNER JOIN orders AS o
         ON od.orderNumber = o.orderNumber
-    JOIN customers c
+    INNER JOIN customers AS c
         ON o.customerNumber = c.customerNumber
 
     GROUP BY
@@ -40,7 +40,7 @@ ProductEnriched AS (
     SELECT
         productCode,
         productName,
-        ROUND(total_sales, 2)                           AS total_sales,
+        ROUND(total_sales, 2) AS total_sales,
         total_units,
         num_orders,
         num_customers,
@@ -49,28 +49,28 @@ ProductEnriched AS (
         ROUND(
             CASE
                 WHEN num_orders > 0
-                THEN total_sales * 1.0 / num_orders
-                ELSE NULL
-            END
-        , 2)                                            AS avg_sales_per_order,
+                    THEN total_sales * 1.0 / num_orders
+            END,
+            2
+        ) AS avg_sales_per_order,
 
         -- Average units per order for this product
         ROUND(
             CASE
                 WHEN num_orders > 0
-                THEN total_units * 1.0 / num_orders
-                ELSE NULL
-            END
-        , 2)                                            AS avg_units_per_order,
+                    THEN total_units * 1.0 / num_orders
+            END,
+            2
+        ) AS avg_units_per_order,
 
         -- Average sales per customer for this product
         ROUND(
             CASE
                 WHEN num_customers > 0
-                THEN total_sales * 1.0 / num_customers
-                ELSE NULL
-            END
-        , 2)                                            AS avg_sales_per_customer
+                    THEN total_sales * 1.0 / num_customers
+            END,
+            2
+        ) AS avg_sales_per_customer
     FROM ProductAgg
 ),
 
@@ -90,20 +90,23 @@ ProductRanked AS (
         -- Share of global sales (%)
         ROUND(
             100.0 * total_sales
-            / SUM(total_sales) OVER ()
-        , 2)                                            AS pct_of_global_sales,
+            / SUM(total_sales) OVER (),
+            2
+        ) AS pct_of_global_sales,
 
         -- Cumulative share of global sales (%), ordered by total_sales DESC
         ROUND(
-            100.0 * SUM(total_sales) OVER (
-                ORDER BY total_sales DESC
-                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
-            )
-            / SUM(total_sales) OVER ()
-        , 2)                                            AS cumulative_pct_of_global_sales,
+            100.0 * SUM(total_sales)
+                OVER (
+                    ORDER BY total_sales DESC
+                    ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+                )
+            / SUM(total_sales) OVER (),
+            2
+        ) AS cumulative_pct_of_global_sales,
 
         -- Rank by total sales (1 = highest selling product)
-        RANK() OVER (ORDER BY total_sales DESC)         AS sales_rank
+        RANK() OVER (ORDER BY total_sales DESC) AS sales_rank
     FROM ProductEnriched
 )
 

@@ -17,13 +17,13 @@
 WITH MonthlyProductLineSales AS (
     SELECT
         p.productLine,
-        strftime('%Y-%m', o.orderDate) AS salesMonth,
+        STRFTIME('%Y-%m', o.orderDate) AS salesMonth,
         SUM(od.quantityOrdered * od.priceEach) AS totalSales
-    FROM orders o
-    JOIN orderdetails od
+    FROM orders AS o
+    INNER JOIN orderdetails AS od
         ON o.orderNumber = od.orderNumber
-    JOIN products p
-        ON p.productCode = od.productCode
+    INNER JOIN products AS p
+        ON od.productCode = p.productCode
     -- Optional filter: uncomment to focus on a single productLine
     -- WHERE p.productLine = 'Classic Cars'
     GROUP BY
@@ -52,12 +52,14 @@ MonthlyWithWindows AS (
 
         -- 3-month rolling average per productLine
         ROUND(
-            AVG(totalSales) OVER (
-                PARTITION BY productLine
-                ORDER BY salesMonth
-                ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
-            )
-        , 2) AS rolling3M_avg
+            AVG(totalSales)
+                OVER (
+                    PARTITION BY productLine
+                    ORDER BY salesMonth
+                    ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+                ),
+            2
+        ) AS rolling3M_avg
     FROM MonthlyProductLineSales
 )
 
@@ -73,8 +75,9 @@ SELECT
     -- MoM % change
     ROUND(
         100.0 * (totalSales - prevMonthSales)
-        / NULLIF(prevMonthSales, 0)
-    , 2) AS mom_pct,
+        / NULLIF(prevMonthSales, 0),
+        2
+    ) AS mom_pct,
 
     -- YoY absolute change
     (totalSales - prevYearSales) AS yoy_change,
@@ -82,8 +85,9 @@ SELECT
     -- YoY % change
     ROUND(
         100.0 * (totalSales - prevYearSales)
-        / NULLIF(prevYearSales, 0)
-    , 2) AS yoy_pct,
+        / NULLIF(prevYearSales, 0),
+        2
+    ) AS yoy_pct,
 
     -- Rolling 3-month average of sales
     rolling3M_avg

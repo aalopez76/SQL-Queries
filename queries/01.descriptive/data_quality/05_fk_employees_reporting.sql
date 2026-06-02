@@ -7,8 +7,9 @@ SELECT
     e.employeeNumber,
     e.firstName || ' ' || e.lastName AS employeeName,
     e.reportsTo
-FROM employees e
-LEFT JOIN employees m
+FROM employees AS e
+LEFT JOIN employees AS m
     ON e.reportsTo = m.employeeNumber
-WHERE e.reportsTo IS NOT NULL
-  AND m.employeeNumber IS NULL;
+WHERE
+    e.reportsTo IS NOT NULL
+    AND m.employeeNumber IS NULL;

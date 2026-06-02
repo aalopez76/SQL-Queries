@@ -15,17 +15,17 @@ WITH EmployeeSales AS (
         e.firstName || ' ' || e.lastName AS employeeName,
 
         -- Core value and volume metrics
-        COALESCE(SUM(od.quantityOrdered * od.priceEach), 0)    AS totalSales,
-        COUNT(DISTINCT c.customerNumber)                       AS numCustomers,
-        COUNT(DISTINCT c.country)                              AS numCountries,
-        COUNT(DISTINCT o.orderNumber)                          AS numOrders
+        COALESCE(SUM(od.quantityOrdered * od.priceEach), 0) AS totalSales,
+        COUNT(DISTINCT c.customerNumber) AS numCustomers,
+        COUNT(DISTINCT c.country) AS numCountries,
+        COUNT(DISTINCT o.orderNumber) AS numOrders
 
-    FROM employees e
-    LEFT JOIN customers c
+    FROM employees AS e
+    LEFT JOIN customers AS c
         ON e.employeeNumber = c.salesRepEmployeeNumber
-    LEFT JOIN orders o
+    LEFT JOIN orders AS o
         ON c.customerNumber = o.customerNumber
-    LEFT JOIN orderdetails od
+    LEFT JOIN orderdetails AS od
         ON o.orderNumber = od.orderNumber
 
     GROUP BY
@@ -37,7 +37,7 @@ WITH EmployeeSales AS (
 SELECT
     employeeNumber,
     employeeName,
-    ROUND(totalSales, 2)              AS totalSales,
+    ROUND(totalSales, 2) AS totalSales,
     numCustomers,
     numCountries,
     numOrders,
@@ -46,10 +46,10 @@ SELECT
     ROUND(
         CASE
             WHEN numOrders > 0
-            THEN totalSales * 1.0 / numOrders
-            ELSE NULL
-        END
-    , 2)                              AS avgOrderValue,
+                THEN totalSales * 1.0 / numOrders
+        END,
+        2
+    ) AS avgOrderValue,
 
     RANK() OVER (ORDER BY totalSales DESC) AS salesRank
 FROM EmployeeSales

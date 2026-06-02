@@ -16,8 +16,8 @@ WITH ProductLineSales AS (
         p.productCode,
         p.productName,
         SUM(od.quantityOrdered * od.priceEach) AS totalSales
-    FROM products p
-    JOIN orderdetails od
+    FROM products AS p
+    INNER JOIN orderdetails AS od
         ON p.productCode = od.productCode
     GROUP BY
         p.productLine,
@@ -63,5 +63,5 @@ WHERE
     OR
     salesRankAsc = 1   -- least-selling
 ORDER BY
-    productLine,
+    productLine ASC,
     category DESC;  -- ensures Top Seller appears before Worst Seller

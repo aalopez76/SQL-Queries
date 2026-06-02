@@ -27,15 +27,13 @@ totales absolutos, por lo que no requirieron cambios. La BD es un subconjunto de
 
 ## P1 — Calidad (delegable a skills)
 
-### [ ] P1.1 — Instalar sqlfluff y pasar el lint
+### [x] P1.1 — Instalar sqlfluff y pasar el lint ✅ 2026-06-01
 **Problema** (`handoff.md` §7.2): lint y hook de formateo inactivos.
-**Acción**
-```powershell
-pip install sqlfluff
-sqlfluff lint queries --dialect sqlite
-sqlfluff fix  queries --dialect sqlite   # revisar el diff antes de aceptar
-```
-**Hecho cuando:** `sqlfluff lint` no reporta errores bloqueantes y el hook PostToolUse queda operativo.
+**Resuelto:** sqlfluff 4.2.1 instalado; añadido `.sqlfluff` (dialect sqlite, keywords UPPER,
+exclusión de `capitalisation.identifiers` por el camelCase del esquema classicmodels).
+`sqlfluff fix` aplicó 502 correcciones de formato + se añadieron 43 alias `AS` a mano (regla AL03,
+4 archivos de exploración). **Lint final: 0 violaciones.** Las 39 consultas siguen ejecutando sin error.
+El hook PostToolUse queda operativo.
 
 ### [ ] P1.2 — Generar la línea base de calidad de datos
 **Acción:** invocar la skill

@@ -15,13 +15,13 @@ WITH CustomerRFM AS (
         c.customerNumber,
         c.customerName,
         c.country,
-        COUNT(DISTINCT o.orderNumber)                      AS freq_orders,
-        COALESCE(SUM(od.quantityOrdered * od.priceEach),0) AS monetary,
-        MAX(o.orderDate)                                   AS last_order_date
-    FROM customers c
-    LEFT JOIN orders o
+        COUNT(DISTINCT o.orderNumber) AS freq_orders,
+        COALESCE(SUM(od.quantityOrdered * od.priceEach), 0) AS monetary,
+        MAX(o.orderDate) AS last_order_date
+    FROM customers AS c
+    LEFT JOIN orders AS o
         ON c.customerNumber = o.customerNumber
-    LEFT JOIN orderdetails od
+    LEFT JOIN orderdetails AS od
         ON o.orderNumber = od.orderNumber
     GROUP BY
         c.customerNumber,
@@ -42,11 +42,10 @@ CustomerRecency AS (
         g.max_order_date,
         CASE
             WHEN r.last_order_date IS NOT NULL
-            THEN CAST(julianday(g.max_order_date) - julianday(r.last_order_date) AS INTEGER)
-            ELSE NULL
+                THEN CAST(JULIANDAY(g.max_order_date) - JULIANDAY(r.last_order_date) AS INTEGER)
         END AS days_since_last_order
-    FROM CustomerRFM r
-    CROSS JOIN GlobalMaxDate g
+    FROM CustomerRFM AS r
+    CROSS JOIN GlobalMaxDate AS g
 ),
 
 -- 4) Rank/bucket R, F, M into simple quintiles (1–5)
@@ -64,10 +63,10 @@ CustomerRFMScored AS (
         NTILE(5) OVER (ORDER BY days_since_last_order ASC) AS r_score,
 
         -- Frequency score: more orders → higher score
-        NTILE(5) OVER (ORDER BY freq_orders DESC)          AS f_score,
+        NTILE(5) OVER (ORDER BY freq_orders DESC) AS f_score,
 
         -- Monetary score: higher total sales → higher score
-        NTILE(5) OVER (ORDER BY monetary DESC)             AS m_score
+        NTILE(5) OVER (ORDER BY monetary DESC) AS m_score
     FROM CustomerRecency
 )
 
@@ -76,7 +75,7 @@ SELECT
     customerNumber,
     customerName,
     country,
-    freq_orders     AS total_orders,
+    freq_orders AS total_orders,
     ROUND(monetary, 2) AS total_sales,
     last_order_date,
     days_since_last_order,

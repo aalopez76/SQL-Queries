@@ -1,38 +1,39 @@
-SELECT 'customers'    AS table_name,
-       (SELECT COUNT(*) FROM customers) AS n_rows,
-       (SELECT COUNT(*) FROM pragma_table_info('customers')) AS n_columns
-
+SELECT
+    'customers' AS table_name,
+    (SELECT COUNT(*) FROM customers) AS n_rows,
+    (SELECT COUNT(*) FROM PRAGMA_TABLE_INFO('customers')) AS n_columns
 UNION ALL
-SELECT 'employees',
-       (SELECT COUNT(*) FROM employees),
-       (SELECT COUNT(*) FROM pragma_table_info('employees'))
-
+SELECT
+    'employees' AS table_name,
+    (SELECT COUNT(*) FROM employees) AS n_rows,
+    (SELECT COUNT(*) FROM PRAGMA_TABLE_INFO('employees')) AS n_columns
 UNION ALL
-SELECT 'offices',
-       (SELECT COUNT(*) FROM offices),
-       (SELECT COUNT(*) FROM pragma_table_info('offices'))
-
+SELECT
+    'offices' AS table_name,
+    (SELECT COUNT(*) FROM offices) AS n_rows,
+    (SELECT COUNT(*) FROM PRAGMA_TABLE_INFO('offices')) AS n_columns
 UNION ALL
-SELECT 'orderdetails',
-       (SELECT COUNT(*) FROM orderdetails),
-       (SELECT COUNT(*) FROM pragma_table_info('orderdetails'))
-
+SELECT
+    'orderdetails' AS table_name,
+    (SELECT COUNT(*) FROM orderdetails) AS n_rows,
+    (SELECT COUNT(*) FROM PRAGMA_TABLE_INFO('orderdetails')) AS n_columns
 UNION ALL
-SELECT 'orders',
-       (SELECT COUNT(*) FROM orders),
-       (SELECT COUNT(*) FROM pragma_table_info('orders'))
-
+SELECT
+    'orders' AS table_name,
+    (SELECT COUNT(*) FROM orders) AS n_rows,
+    (SELECT COUNT(*) FROM PRAGMA_TABLE_INFO('orders')) AS n_columns
 UNION ALL
-SELECT 'payments',
-       (SELECT COUNT(*) FROM payments),
-       (SELECT COUNT(*) FROM pragma_table_info('payments'))
-
+SELECT
+    'payments' AS table_name,
+    (SELECT COUNT(*) FROM payments) AS n_rows,
+    (SELECT COUNT(*) FROM PRAGMA_TABLE_INFO('payments')) AS n_columns
 UNION ALL
-SELECT 'productlines',
-       (SELECT COUNT(*) FROM productlines),
-       (SELECT COUNT(*) FROM pragma_table_info('productlines'))
-
+SELECT
+    'productlines' AS table_name,
+    (SELECT COUNT(*) FROM productlines) AS n_rows,
+    (SELECT COUNT(*) FROM PRAGMA_TABLE_INFO('productlines')) AS n_columns
 UNION ALL
-SELECT 'products',
-       (SELECT COUNT(*) FROM products),
-       (SELECT COUNT(*) FROM pragma_table_info('products'));
+SELECT
+    'products' AS table_name,
+    (SELECT COUNT(*) FROM products) AS n_rows,
+    (SELECT COUNT(*) FROM PRAGMA_TABLE_INFO('products')) AS n_columns;

@@ -35,10 +35,10 @@ WITH country_region_base AS (
         c.customerNumber,
         (od.quantityOrdered * od.priceEach) AS line_sales
 
-    FROM customers c
-    JOIN orders o
+    FROM customers AS c
+    INNER JOIN orders AS o
         ON c.customerNumber = o.customerNumber
-    JOIN orderdetails od
+    INNER JOIN orderdetails AS od
         ON o.orderNumber = od.orderNumber
 ),
 
@@ -47,8 +47,8 @@ country_agg AS (
     SELECT
         region,
         country,
-        SUM(line_sales)                AS total_sales,
-        COUNT(DISTINCT orderNumber)    AS num_orders,
+        SUM(line_sales) AS total_sales,
+        COUNT(DISTINCT orderNumber) AS num_orders,
         COUNT(DISTINCT customerNumber) AS num_customers
     FROM country_region_base
     GROUP BY
@@ -60,9 +60,9 @@ country_agg AS (
 region_agg AS (
     SELECT
         region,
-        SUM(total_sales)             AS region_total_sales,
-        SUM(num_orders)              AS region_num_orders,
-        SUM(num_customers)           AS region_num_customers
+        SUM(total_sales) AS region_total_sales,
+        SUM(num_orders) AS region_num_orders,
+        SUM(num_customers) AS region_num_customers
     FROM country_agg
     GROUP BY
         region
@@ -73,7 +73,7 @@ country_vs_region AS (
     SELECT
         ca.region,
         ca.country,
-        ROUND(ca.total_sales, 2)       AS total_sales,
+        ROUND(ca.total_sales, 2) AS total_sales,
         ca.num_orders,
         ca.num_customers,
 
@@ -86,37 +86,39 @@ country_vs_region AS (
         ROUND(
             CASE
                 WHEN ca.num_customers > 0
-                THEN ca.total_sales * 1.0 / ca.num_customers
-                ELSE NULL
-            END
-        , 2) AS avg_sales_per_customer,
+                    THEN ca.total_sales * 1.0 / ca.num_customers
+            END,
+            2
+        ) AS avg_sales_per_customer,
 
         -- Average order value (country-level)
         ROUND(
             CASE
                 WHEN ca.num_orders > 0
-                THEN ca.total_sales * 1.0 / ca.num_orders
-                ELSE NULL
-            END
-        , 2) AS avg_order_value,
+                    THEN ca.total_sales * 1.0 / ca.num_orders
+            END,
+            2
+        ) AS avg_order_value,
 
         -- Share of region's sales (%)
         ROUND(
-            100.0 * ca.total_sales / ra.region_total_sales
-        , 2) AS pct_of_region_sales,
+            100.0 * ca.total_sales / ra.region_total_sales,
+            2
+        ) AS pct_of_region_sales,
 
         -- Share of global sales (%)
         ROUND(
-            100.0 * ca.total_sales / SUM(ca.total_sales) OVER ()
-        , 2) AS pct_of_global_sales,
+            100.0 * ca.total_sales / SUM(ca.total_sales) OVER (),
+            2
+        ) AS pct_of_global_sales,
 
         -- Rank of country within its region by total sales
         RANK() OVER (
             PARTITION BY ca.region
             ORDER BY ca.total_sales DESC
         ) AS rank_in_region
-    FROM country_agg ca
-    JOIN region_agg ra
+    FROM country_agg AS ca
+    INNER JOIN region_agg AS ra
         ON ca.region = ra.region
 )
 

@@ -21,8 +21,8 @@ SELECT
     m.firstName || ' ' || m.lastName AS managerName,
     e.employeeNumber,
     e.reportsTo
-FROM employees e
-JOIN employees m
+FROM employees AS e
+INNER JOIN employees AS m
     ON e.reportsTo = m.employeeNumber
 ORDER BY
     managerName,

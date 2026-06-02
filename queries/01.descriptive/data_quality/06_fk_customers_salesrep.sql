@@ -7,8 +7,9 @@ SELECT
     c.customerNumber,
     c.customerName,
     c.salesRepEmployeeNumber
-FROM customers c
-LEFT JOIN employees e
+FROM customers AS c
+LEFT JOIN employees AS e
     ON c.salesRepEmployeeNumber = e.employeeNumber
-WHERE c.salesRepEmployeeNumber IS NOT NULL
-  AND e.employeeNumber IS NULL;
+WHERE
+    c.salesRepEmployeeNumber IS NOT NULL
+    AND e.employeeNumber IS NULL;

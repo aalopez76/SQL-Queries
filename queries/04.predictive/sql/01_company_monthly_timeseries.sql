@@ -3,22 +3,25 @@
 
 WITH MonthlyBase AS (
     SELECT
-        strftime('%Y-%m', o.orderDate) AS salesMonth,
+        STRFTIME('%Y-%m', o.orderDate) AS salesMonth,
         SUM(od.quantityOrdered * od.priceEach) AS totalSales,
         COUNT(DISTINCT o.orderNumber) AS totalOrders,
         COUNT(DISTINCT o.customerNumber) AS totalCustomers,
         SUM(
             CASE
-                WHEN o.shippedDate IS NOT NULL
-                     AND o.requiredDate IS NOT NULL
-                     AND o.shippedDate <= o.requiredDate
-                THEN 1 ELSE 0
+                WHEN
+                    o.shippedDate IS NOT NULL
+                    AND o.requiredDate IS NOT NULL
+                    AND o.shippedDate <= o.requiredDate
+                    THEN 1
+                ELSE 0
             END
         ) AS onTimeOrders
-    FROM orders o
-    JOIN orderdetails od ON o.orderNumber = od.orderNumber
+    FROM orders AS o
+    INNER JOIN orderdetails AS od ON o.orderNumber = od.orderNumber
     GROUP BY salesMonth
 )
+
 SELECT
     salesMonth,
     totalSales,
