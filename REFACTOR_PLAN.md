@@ -9,16 +9,11 @@
 
 ## P0 — Bloqueantes (hacer primero)
 
-### [ ] P0.1 — Cerrar la reorganización de carpetas en git
-**Problema** (`handoff.md` §7.1): las carpetas antiguas figuran como *deleted* y las nuevas
-(`queries/01.descriptive/`…) como *untracked*. El renombrado no está commiteado y git no lo ve como *rename*.
-**Acción**
-```powershell
-git add -A
-git status        # verificar que los movimientos aparecen como R (rename), no como delete+add
-git commit -m "Reorganizar queries por capa numerada y añadir workspace de Claude Code"
-```
-**Hecho cuando:** `git status` está limpio y `git log` muestra el commit con los renombrados.
+### [x] P0.1 — Cerrar la reorganización de carpetas en git ✅ 2026-06-01
+**Problema** (`handoff.md` §7.1): las carpetas antiguas figuraban como *deleted* y las nuevas
+(`queries/01.descriptive/`…) como *untracked*. El renombrado no estaba commiteado y git no lo veía como *rename*.
+**Resuelto:** commit `03e9cb9` — git detectó los 78 movimientos como *renames* al 100 %
+(incluido el typo `revenu`→`revenue` en `.sql` y `.png`). Working tree limpio.
 
 ### [ ] P0.2 — Conciliar el README con la BD real
 **Problema** (`handoff.md` §7.5): el README cita 326 orders / 2.994 orderdetails; la BD real tiene

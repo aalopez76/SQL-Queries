@@ -45,17 +45,16 @@
 
 - **Fase:** portafolio **funcional y pulido** en consolidación. No es software en producción;
   no hay despliegue ni servicio. "Producción" aquí = el repositorio público presentable.
-- **Último hito (commit):** `c4d86cf` — *"update files"* — **2025-12-18**.
-- **Trabajo no commiteado (working tree, a fecha 2026-06-01):** reorganización de carpetas a prefijo
-  numérico + toda la configuración de Claude Code ("la fábrica") + correcciones de auditoría.
-  **Está sin commitear deliberadamente** (ver §7 y §9).
+- **Último hito (commit):** `03e9cb9` — *"Reorganizar queries por capa numerada y añadir workspace
+  de Claude Code"* — **2026-06-01**. Incluye la reorganización (78 renames), la "fábrica" de Claude Code
+  y las correcciones de auditoría. (Commit previo: `c4d86cf` — *"update files"* — 2025-12-18.)
 - **Métricas del modelo / umbral de aceptación:** **N/A** — no hay modelo. El equivalente son los
   **umbrales de calidad** en `configs/thresholds.yaml` (máx. % nulos, compatibilidad SQLite, etc.),
   aplicados por las skills.
 - **Calidad de datos (verificada el 2026-06-01 con `scripts/validate_db.ps1`):** 8 tablas,
   **0 huérfanos** en las 5 FKs comprobadas. La BD está íntegra.
-- **Deuda técnica:** baja pero presente — ver §7. Lo principal: reorganización git a medio cerrar
-  y sqlfluff sin instalar (hook/lint inactivos hasta entonces).
+- **Deuda técnica:** baja. La reorganización git ya está cerrada (commit `03e9cb9`). Pendiente
+  principal: sqlfluff sin instalar (hook/lint inactivos hasta entonces) y conciliar totales del README — ver §7.
 
 ---
 
@@ -246,12 +245,9 @@ sqlfluff fix  queries --dialect sqlite
 
 ## 7. Known Issues
 
-1. **Reorganización git a medio cerrar (principal).** Las carpetas antiguas `queries/<categoría>/`
-   figuran como *deleted* en el índice y las nuevas (`queries/01.descriptive/`…) están *untracked*.
-   El renombrado se hizo en disco pero **no se ha hecho `git add`/`commit`**. Git aún no ve los
-   movimientos como *renames*. **Workaround temporal:** todo funciona en el working tree; falta cerrar
-   en git (ver §9).
-2. **sqlfluff no instalado.** El lint y el hook de formateo están inactivos hasta `pip install sqlfluff`.
+1. ~~**Reorganización git a medio cerrar.**~~ ✅ **Resuelto** en commit `03e9cb9` (2026-06-01):
+   git registró los 78 movimientos como *renames* al 100 %. Working tree limpio.
+2. **sqlfluff no instalado (principal pendiente).** El lint y el hook de formateo están inactivos hasta `pip install sqlfluff`.
    No es un bug — es un requisito opcional pendiente.
 3. **Posible duplicado de consultas:** `06_customer_salesrep_map.sql` coexiste con `_01` y `_02`
    en `01.descriptive/sql/`. Revisar si los tres son necesarios o si `_01/_02` son iteraciones.
@@ -268,8 +264,8 @@ sqlfluff fix  queries --dialect sqlite
 > No existen `docs/REFACTOR_PLAN.md` ni `docs/TODO.md`. Esta lista se deriva de `AUDIT.md` y del estado real.
 
 **Prioridad alta**
-1. **Cerrar la reorganización en git** y hacer un commit limpio de la fábrica + renombrados (ver §9).
-2. **Conciliar el README con la BD real** (totales de orders/orderdetails desactualizados — §7.5).
+1. ~~**Cerrar la reorganización en git**~~ ✅ Hecho (commit `03e9cb9`, 2026-06-01).
+2. **Conciliar el README con la BD real** (totales de orders/orderdetails desactualizados — §7.5). ← siguiente P0.
 
 **Prioridad media** — delegables a skills
 3. `pip install sqlfluff` y ejecutar `sqlfluff lint queries --dialect sqlite`; corregir estilo.
@@ -291,15 +287,11 @@ sqlfluff fix  queries --dialect sqlite
 > /data_validation data/toys_and_models.sqlite
 > ```
 >
-> Genera `docs/data_report.md` con esquema, nulos, cardinalidad e integridad reales. Es read-only,
-> no toca git, y te da el estado objetivo de los datos antes de cerrar la reorganización (Pending §8.1).
+> Genera `docs/data_report.md` con esquema, nulos, cardinalidad e integridad reales. Es read-only
+> y te da el estado objetivo de los datos. Con esa línea base, ataca la siguiente P0 (§8.2):
+> **conciliar los totales del README con la BD real** (283 orders / 2.649 details, no 326 / 2.994).
 >
-> Inmediatamente después, cierra el git pendiente con un commit limpio, p. ej.:
-> ```powershell
-> git add -A
-> git status        # revisar que los renombrados aparecen como R (renames)
-> git commit -m "Reorganizar queries por capa y añadir workspace de Claude Code"
-> ```
+> _(La reorganización git ya quedó cerrada en el commit `03e9cb9`.)_
 
 ---
 
