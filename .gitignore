@@ -1,26 +1,36 @@
-# --- SQLite: ficheros temporales (NO ignoramos la BD .sqlite: es el dataset del portafolio) ---
+# --- SQLite: temporary files (we do NOT ignore the .sqlite DB: it is the portfolio dataset) ---
 *.sqlite-wal
 *.sqlite-shm
 *.sqlite-journal
 *.db-wal
 *.db-shm
 
-# --- sqlfluff / Python (host de las herramientas de lint) ---
+# --- sqlfluff / Python (host of the lint tooling) ---
 __pycache__/
 *.pyc
 .venv/
 venv/
 .sqlfluff_cache/
 
-# --- Sistema operativo ---
+# --- Operating system ---
 Thumbs.db
 desktop.ini
 .DS_Store
 
-# --- Editores ---
+# --- Editors ---
 .vscode/
 .idea/
 *.swp
 
-# --- Salidas locales de validación (regenerables) ---
+# --- Local validation outputs (regenerable) ---
 docs/data_report.local.md
+
+# --- Internal working notes / AI tooling (kept local, not published) ---
+CLAUDE.md
+handoff.md
+AUDIT.md
+REFACTOR_PLAN.md
+.claude/
+
+# --- Presentation artifacts (live on the personal page, not in the code repo) ---
+*.pdf

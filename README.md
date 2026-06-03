@@ -154,12 +154,10 @@ Based on the findings:
 
 ---
 
-## Reproducibility & Claude Code workspace
-
-This repo is configured as a professional Claude Code workspace (see `CLAUDE.md`).
+## Reproducibility
 
 **Requirements**
-- `sqlite3` CLI (v3.51+) — already on the dev machine.
+- `sqlite3` CLI (v3.51+).
 - `sqlfluff` (optional, for lint/format): `pip install sqlfluff`.
 
 **Common commands** (PowerShell)
@@ -179,12 +177,7 @@ pwsh scripts/snapshot_predictive.ps1            # verify against saved snapshots
 pwsh scripts/snapshot_predictive.ps1 -Update    # regenerate when a change is intended
 ```
 
-**Claude Code skills**
-- `/data_validation data/toys_and_models.sqlite` → schema/integrity report in `docs/data_report.md`.
-- `/query_review <file.sql>` → correctness + dialect + performance + style verdict.
-
-Quality thresholds live in `configs/thresholds.yaml`. A `PostToolUse` hook
-(`.claude/settings.json`) auto-formats `.sql` files with sqlfluff when it is installed.
+Quality thresholds live in `configs/thresholds.yaml`.
 
 **Continuous integration**
 A lightweight CI workflow (`.github/workflows/ci.yml`) runs on every push and pull
@@ -192,5 +185,7 @@ request to `main`, enforcing three checks: SQL lint (`sqlfluff`), database integ
 (`validate_db.ps1`), and predictive-query regression (`snapshot_predictive.ps1`).
 Expected predictive results are stored as canonical-order CSV snapshots under
 `tests/snapshots/04.predictive/` (see `tests/snapshots/README.md`).
+
+> Code review and data-quality QA were assisted by AI tooling.
 
 

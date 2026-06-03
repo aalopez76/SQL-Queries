@@ -1,13 +1,13 @@
 SELECT
     c.country,
 
-    -- Total de ventas
+    -- Total sales
     ROUND(SUM(od.quantityOrdered * od.priceEach), 2) AS total_sales,
 
-    -- Número de pedidos
+    -- Number of orders
     COUNT(DISTINCT o.orderNumber) AS num_orders,
 
-    -- Promedio de ventas por cliente
+    -- Average sales per customer
     ROUND(
         SUM(od.quantityOrdered * od.priceEach)
         / COUNT(DISTINCT c.customerNumber),

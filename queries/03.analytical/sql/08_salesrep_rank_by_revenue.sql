@@ -33,7 +33,7 @@ WITH EmployeeSales AS (
         employeeName
 )
 
--- 2) Final ranking with ticket promedio
+-- 2) Final ranking with average ticket
 SELECT
     employeeNumber,
     employeeName,
@@ -42,7 +42,7 @@ SELECT
     numCountries,
     numOrders,
 
-    -- Ticket promedio (average order value)
+    -- Average ticket (average order value)
     ROUND(
         CASE
             WHEN numOrders > 0

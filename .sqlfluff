@@ -1,21 +1,21 @@
-# Configuración de sqlfluff para sql-analytics-portfolio
-# Alineada con configs/thresholds.yaml (query_quality).
+# sqlfluff configuration for sql-analytics-portfolio
+# Aligned with configs/thresholds.yaml (query_quality).
 [sqlfluff]
 dialect = sqlite
 max_line_length = 120
-# Reglas excluidas: ruido para un portafolio analítico (no son errores reales).
-#  - RF02/RF03: exigir cualificación de columnas con su tabla en todo join (verboso aquí).
-#  - AM04: prohíbe SELECT * sin known schema (lo usamos en exploración descriptiva).
-#  - ST06: ordena las columnas del SELECT por tipo (reescribiría consultas innecesariamente).
-# Nota: CP02 (capitalisation.identifiers) se excluye porque el esquema classicmodels usa
-# identificadores camelCase (customerNumber, orderNumber, ...) que no podemos renombrar.
+# Excluded rules: noise for an analytics portfolio (not real errors).
+#  - RF02/RF03: require qualifying columns with their table in every join (verbose here).
+#  - AM04: forbids SELECT * without a known schema (we use it in descriptive exploration).
+#  - ST06: orders the SELECT columns by type (would rewrite queries unnecessarily).
+# Note: CP02 (capitalisation.identifiers) is excluded because the classicmodels schema uses
+# camelCase identifiers (customerNumber, orderNumber, ...) that we cannot rename.
 exclude_rules = references.qualification, references.consistent, ambiguous.column_count, structure.column_order, capitalisation.identifiers
 
 [sqlfluff:indentation]
 indent_unit = space
 tab_space_size = 4
 
-# Palabras clave SQL en MAYÚSCULAS (regla require_uppercase_keywords del proyecto).
+# SQL keywords in UPPERCASE (the project's require_uppercase_keywords rule).
 [sqlfluff:rules:capitalisation.keywords]
 capitalisation_policy = upper
 

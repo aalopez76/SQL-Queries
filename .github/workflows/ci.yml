@@ -1,8 +1,8 @@
 name: CI
 
-# CI ligero para el portafolio SQL. No hay build ni tests de aplicación: lo que
-# se verifica es (1) estilo/dialecto del SQL, (2) integridad de la BD y
-# (3) que los resultados de las consultas predictivas no han derivado.
+# Lightweight CI for the SQL portfolio. There is no build or application tests: what
+# is verified is (1) SQL style/dialect, (2) DB integrity, and
+# (3) that the predictive query results have not drifted.
 on:
   push:
     branches: [main]
@@ -33,16 +33,16 @@ jobs:
           sqlite3 --version
           sqlfluff --version
 
-      # 1) Estilo y dialecto SQLite (debe estar en 0 violaciones).
+      # 1) SQLite style and dialect (must be at 0 violations).
       - name: Lint SQL (sqlfluff)
         run: sqlfluff lint queries --dialect sqlite
 
-      # 2) Integridad referencial y conteos de la BD.
+      # 2) Referential integrity and DB counts.
       - name: Validate database
         shell: pwsh
         run: pwsh scripts/validate_db.ps1
 
-      # 3) Detección de derivas en las consultas predictivas.
+      # 3) Drift detection on the predictive queries.
       - name: Check predictive snapshots
         shell: pwsh
         run: pwsh scripts/snapshot_predictive.ps1

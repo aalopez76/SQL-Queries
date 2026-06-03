@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  Ejecuta un script .sql contra la base de datos SQLite del proyecto (solo lectura).
+  Runs a .sql script against the project's SQLite database (read-only).
 .EXAMPLE
   pwsh scripts/run_query.ps1 -Query queries/01.descriptive/sql/03_business_overview.sql
 .EXAMPLE
@@ -14,12 +14,12 @@ param(
 $ErrorActionPreference = "Stop"
 
 if (-not (Get-Command sqlite3 -ErrorAction SilentlyContinue)) {
-  Write-Error "No se encontró 'sqlite3' en el PATH. Instálalo o añádelo al PATH."
+  Write-Error "'sqlite3' was not found in PATH. Install it or add it to PATH."
   exit 1
 }
-if (-not (Test-Path $Database)) { Write-Error "Base de datos no encontrada: $Database"; exit 1 }
-if (-not (Test-Path $Query))    { Write-Error "Consulta no encontrada: $Query"; exit 1 }
+if (-not (Test-Path $Database)) { Write-Error "Database not found: $Database"; exit 1 }
+if (-not (Test-Path $Query))    { Write-Error "Query not found: $Query"; exit 1 }
 
-Write-Host "▶ Ejecutando $Query  sobre  $Database" -ForegroundColor Cyan
-# -readonly garantiza que ninguna consulta pueda modificar la BD.
+Write-Host "▶ Running $Query  against  $Database" -ForegroundColor Cyan
+# -readonly guarantees that no query can modify the DB.
 sqlite3 -readonly -header -column $Database ".read $Query"
