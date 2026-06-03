@@ -1,0 +1,123 @@
+customerNumber,customerName,country,total_orders,total_sales,last_order_date,days_since_last_order,r_score,f_score,m_score,rfm_score
+103,"Atelier graphique",France,3,22314.36,2019-11-25,84,4,4,2,10
+112,"Signal Gift Stores",USA,3,80180.98,2019-11-29,80,4,4,4,12
+114,"Australian Collectors, Co.",Australia,5,180585.07,2019-11-29,80,4,5,5,14
+119,"La Rochelle Gifts",France,3,116949.68,2020-02-03,14,5,5,5,15
+121,"Baane Mini Imports",Norway,4,104224.79,2019-11-05,104,4,5,5,14
+124,"Mini Gifts Distributors Ltd.",USA,13,492684.39,2020-02-17,0,5,5,5,15
+125,"Havel & Zbyszek Co",Poland,0,0.0,,,1,1,1,3
+128,"Blauer See Auto, Co.",Germany,4,75937.76,2019-11-05,104,4,5,4,13
+129,"Mini Wheels Co.",USA,3,66710.56,2019-11-18,91,4,4,3,11
+131,"Land of Toys Inc.",USA,4,149085.15,2019-11-15,94,4,5,5,14
+141,"Euro+ Shopping Channel",Spain,20,613985.62,2020-02-16,1,5,5,5,15
+144,"Volvo Model Replicas, Co",Sweden,4,66694.82,2019-11-19,90,4,5,3,12
+145,"Danish Wholesale Imports",Denmark,4,107446.5,2019-11-10,99,4,5,5,14
+146,"Saveley & Henriot, Co.",France,3,130305.35,2019-03-02,352,2,5,5,12
+148,"Dragon Souveniers, Ltd.",Singapore,4,152734.99,2019-08-04,197,3,5,5,13
+151,"Muscle Machine Inc",USA,4,177913.95,2019-12-01,78,4,5,5,14
+157,"Diecast Classics Inc.",USA,3,98509.25,2019-11-02,107,4,4,5,13
+161,"Technics Stores Inc.",USA,4,104545.22,2020-01-05,43,5,5,5,15
+166,"Handji Gifts& Co",Singapore,3,105420.57,2019-09-01,169,3,5,5,13
+167,"Herkku Gifts","Norway  ",3,97562.47,2019-09-03,167,3,4,4,11
+168,"American Souvenirs Inc",USA,0,0.0,,,1,1,1,3
+169,"Porto Imports Co.",Portugal,0,0.0,,,1,1,1,3
+171,"Daedalus Designs Imports",France,2,61781.7,2019-02-21,361,2,3,3,8
+172,"La Corne Dabondance, Co.",France,3,86553.52,2019-11-20,89,4,4,4,12
+173,"Cambridge Collectables Co.",USA,2,32198.69,2019-05-08,285,2,2,2,6
+175,"Gift Depot Inc.",USA,2,66923.85,2019-06-28,234,2,3,3,8
+177,"Osaka Souveniers Co.",Japan,2,62361.22,2019-04-13,310,2,3,3,8
+181,"Vitachrome Inc.",USA,3,72497.64,2019-11-05,104,4,4,3,11
+186,"Toys of Finland, Co.",Finland,3,95546.46,2020-02-09,8,5,4,4,13
+187,"AV Stores, Co.",UK,3,148410.09,2019-11-17,92,4,5,5,14
+189,"Clover Collections, Co.",Ireland,2,49898.27,2019-09-16,154,3,2,2,7
+198,"Auto-Moto Classics Inc.",USA,3,21554.26,2019-12-03,76,4,3,2,9
+201,"UK Collectables, Ltd.",UK,2,69351.78,2019-06-01,261,2,3,3,8
+202,"Canadian Gift Exchange Network",Canada,2,70122.19,2019-10-22,118,3,3,3,9
+204,"Online Mini Collectables",USA,2,55577.26,2019-09-10,160,3,2,3,8
+205,Toys4GrownUps.com,USA,3,93803.3,2020-01-12,36,5,4,4,13
+206,"Asian Shopping Network, Co",Singapore,0,0.0,,,1,1,1,3
+209,"Mini Caravy",France,2,40701.57,2019-06-04,258,2,2,2,6
+211,"King Kong Collectables, Co.","Hong Kong",2,45480.79,2018-12-01,443,2,2,2,6
+216,"Enaco Distributors",Spain,3,68520.47,2019-11-24,85,4,4,3,11
+219,"Boards & Toys Co.",USA,2,7918.6,2020-02-08,9,5,2,1,8
+223,"Nat├╝rlich Autos",Germany,0,0.0,,,1,1,1,3
+227,"Heintze Collectables",Denmark,2,89909.8,2019-10-22,118,3,3,4,10
+233,"Qu├®bec Home Shopping Network",Canada,2,39907.29,2019-06-17,245,2,2,2,6
+237,"ANG Resellers",Spain,0,0.0,,,1,1,1,3
+239,"Collectable Mini Designs Co.",USA,2,80375.24,2019-02-26,356,2,3,4,9
+240,giftsbymail.co.uk,UK,2,71783.75,2019-11-01,108,3,3,3,9
+242,"Alpha Cognac",France,2,48051.04,2018-11-08,466,2,2,2,6
+247,"Messner Shopping Network",Germany,0,0.0,,,1,1,1,3
+249,"Amica Models & Co.",Italy,2,82223.23,2019-09-09,161,3,3,4,10
+250,"Lyon Souveniers",France,2,49731.1,2019-12-09,70,5,2,2,9
+256,"Auto Associ├®s & Cie.",France,2,58876.41,2019-10-11,129,3,2,3,8
+259,"Toms Spezialit├ñten, Ltd",Germany,2,89223.14,2019-10-16,124,3,3,4,10
+260,"Royal Canadian Collectables, Ltd.",Canada,2,66812.0,2019-08-20,181,3,3,3,9
+273,"Franken Gifts, Co",Germany,0,0.0,,,1,1,1,3
+276,"Annas Decorations, Ltd",Australia,3,107185.7,2020-01-20,28,5,5,5,15
+278,"Rovelli Gifts",Italy,3,127529.69,2019-11-12,97,4,5,5,14
+282,"Souveniers And Things Co.",Australia,3,91655.61,2019-12-17,62,5,4,4,13
+286,"Martas Replicas Co.",USA,2,90545.37,2019-10-13,127,3,3,4,10
+293,"BG&E Collectables",Switzerland,0,0.0,,,1,1,1,3
+298,"Vida Sport, Ltd",Switzerland,2,108777.92,2019-08-30,171,3,3,5,11
+299,"Norway Gifts By Mail, Co.","Norway  ",2,69059.04,2019-08-21,180,3,3,3,9
+303,"Schuyler Imports",Netherlands,0,0.0,,,1,1,1,3
+307,"Der Hund Imports",Germany,0,0.0,,,1,1,1,3
+311,"Oulu Toy Supplies, Inc.",Finland,3,95706.15,2020-01-31,17,5,4,4,13
+314,"Petit Auto",Belgium,2,62253.85,2019-07-21,211,3,3,3,9
+319,"Mini Classics",USA,2,78432.16,2019-10-15,125,3,3,4,10
+320,"Mini Creations Ltd.",USA,3,101872.52,2020-01-07,41,5,4,5,14
+321,"Corporate Gift Ideas Co.",USA,3,118185.21,2020-02-17,0,5,5,5,15
+323,"Down Under Souveniers, Inc","New Zealand",3,79601.95,2019-12-04,75,5,4,4,13
+324,"Stylish Desk Decors, Co.",UK,3,80556.73,2019-12-03,76,5,4,4,13
+328,"Tekni Collectables Inc.",USA,2,38281.51,2019-05-18,275,2,2,2,6
+333,"Australian Gift Network, Co",Australia,3,55190.16,2020-02-02,15,5,4,2,11
+334,"Suominen Souveniers",Finland,3,103896.74,2020-01-06,42,5,4,5,14
+335,"Cramer Spezialit├ñten, Ltd",Germany,0,0.0,,,1,1,1,3
+339,"Classic Gift Ideas, Inc",USA,2,57939.34,2019-10-14,126,3,2,3,8
+344,"CAF Imports",Spain,2,46751.14,2019-03-19,335,2,2,2,6
+347,"Men R US Retailers, Ltd.",USA,2,41506.19,2019-01-09,404,2,2,2,6
+348,"Asian Treasures, Inc.",Ireland,0,0.0,,,1,1,1,3
+350,"Marseille Mini Autos",France,3,71547.53,2020-01-06,42,5,4,3,12
+353,"Reims Collectables",France,4,80326.25,2019-12-15,64,5,5,4,14
+356,"SAR Distributors, Co","South Africa",0,0.0,,,1,1,1,3
+357,GiftsForHim.com,"New Zealand",2,57989.42,2019-06-16,246,2,2,3,7
+361,"Kommission Auto",Germany,0,0.0,,,1,1,1,3
+362,Gifts4AllAges.com,USA,2,33533.47,2019-09-10,160,3,2,2,7
+363,"Online Diecast Creations Co.",USA,3,116449.29,2019-11-04,105,4,5,5,14
+369,"Lisboa Souveniers, Inc",Portugal,0,0.0,,,1,1,1,3
+376,"Precious Collectables",Switzerland,0,0.0,,,1,1,1,3
+379,"Collectables For Less Inc.",USA,3,73533.65,2020-01-20,28,5,4,4,13
+381,"Royale Belge",Belgium,4,29217.18,2020-01-10,38,5,5,2,12
+382,"Salzburg Collectables",Austria,3,85060.0,2019-11-24,85,4,4,4,12
+385,"Cruz & Sons Co.",Philippines,3,87468.3,2019-11-16,93,4,4,4,12
+386,"Lordine Souveniers",Italy,2,90143.31,2019-07-06,226,2,3,4,9
+398,"Tokyo Collectables, Ltd",Japan,3,104933.28,2020-01-26,22,5,5,5,15
+406,"Auto Canal+ Petit",France,2,74246.12,2019-05-26,267,2,3,4,9
+409,"Stuttgart Collectable Exchange",Germany,0,0.0,,,1,1,1,3
+412,"Extreme Desk Decorations, Ltd","New Zealand",2,66704.94,2019-07-12,220,3,3,3,9
+415,"Bavarian Collectables Imports, Co.",Germany,1,31310.09,2019-09-15,155,3,1,2,6
+424,"Classic Legends Inc.",USA,3,69214.33,2019-11-21,88,4,4,3,11
+443,"Feuer Online Stores, Inc",Germany,0,0.0,,,1,1,1,3
+447,"Gift Ideas Corp.",USA,3,49967.78,2019-12-04,75,5,4,2,11
+448,"Scandinavian Gift Ideas",Sweden,2,92976.99,2019-09-08,162,3,3,4,10
+450,"The Sharp Gifts Warehouse",USA,2,59551.38,2019-06-14,248,2,3,3,8
+452,"Mini Auto Werke",Austria,2,42252.87,2018-11-04,470,1,2,2,5
+455,"Super Scale Inc.",USA,2,70378.65,2019-05-04,289,2,3,3,8
+456,"Microscale Inc.",USA,2,29230.43,2019-11-03,106,4,2,2,8
+458,"Corrida Auto Replicas, Ltd",Spain,3,112440.09,2019-11-01,108,3,5,5,13
+459,"Warburg Exchange",Germany,0,0.0,,,1,1,1,3
+462,FunGiftIdeas.com,USA,2,58333.72,2019-11-04,105,4,2,3,9
+465,"Anton Designs, Ltd.",Spain,0,0.0,,,1,1,1,3
+471,"Australian Collectables, Ltd",Australia,2,44920.76,2019-07-02,230,2,2,2,6
+473,"Frau da Collezione",Italy,2,25358.32,2019-02-09,373,2,2,2,6
+475,"West Coast Collectables Co.",USA,2,43748.72,2019-01-29,384,2,2,2,6
+477,"Mit Vergn├╝gen & Co.",Germany,0,0.0,,,1,1,1,3
+480,"Kremlin Collectables, Co.",Russia,0,0.0,,,1,1,1,3
+481,"Raanan Stores, Inc",Israel,0,0.0,,,1,1,1,3
+484,"Iberia Gift Imports, Corp.",Spain,2,50987.85,2019-10-06,134,3,2,2,7
+486,"Motor Mint Distributors Inc.",USA,3,77726.59,2019-11-17,92,4,4,4,12
+487,"Signal Collectibles Ltd.",USA,2,42570.37,2019-02-10,372,2,2,2,6
+489,"Double Decker Gift Stores, Ltd",UK,2,29586.15,2019-01-22,391,2,2,2,6
+495,"Diecast Collectables",USA,2,65541.74,2019-04-26,297,2,3,3,8
+496,"Kellys Gift Shop","New Zealand",3,107207.04,2019-12-16,63,5,5,5,15

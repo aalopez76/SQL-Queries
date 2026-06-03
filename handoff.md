@@ -1,6 +1,6 @@
 # Handoff — sql-analytics-portfolio
 
-> Documento de transferencia del proyecto. Generado: **2026-06-01** · Última actualización: **2026-06-02**.
+> Documento de transferencia del proyecto. Generado: **2026-06-01** · Última actualización: **2026-06-02** (P2 cerradas).
 > Autor saliente: Senior Data Scientist (sesión Claude Code). Para: colega entrante / futura instancia de Claude Code.
 >
 > ⚠️ **Lee esto primero.** La plantilla de handoff asumía un proyecto **ML en Python** (DVC, MLflow,
@@ -59,8 +59,9 @@
   aplicados por las skills.
 - **Calidad de datos (verificada el 2026-06-01 con `scripts/validate_db.ps1`):** 8 tablas,
   **0 huérfanos** en las 5 FKs comprobadas. La BD está íntegra.
-- **Deuda técnica:** muy baja. Todas las P0 y P1 cerradas. Solo quedan las P2 opcionales
-  (CI ligero, snapshots de resultados predictivos) — ver §8.
+- **Deuda técnica:** prácticamente nula. **Todas las P0, P1 y P2 cerradas** (2026-06-02):
+  CI ligero (`.github/workflows/ci.yml`) y snapshots de regresión de las 8 predictivas
+  (`tests/snapshots/04.predictive/`) — ver §8.
 
 ---
 
@@ -86,7 +87,8 @@
   que auto-formatea `.sql` con sqlfluff. **Defensivo:** no-op si sqlfluff no está instalado.
 - **`CLAUDE.md`** — single source of truth (stack, comandos, hooks, skills, convenciones).
 - **`configs/thresholds.yaml`** — umbrales de calidad para datos y consultas.
-- **Scripts** (`scripts/`): `run_query.ps1` (runner read-only), `validate_db.ps1` (validador rápido).
+- **Scripts** (`scripts/`): `run_query.ps1` (runner read-only), `validate_db.ps1` (validador rápido),
+  `snapshot_predictive.ps1` (genera/verifica snapshots de regresión — añadido en P2.2).
 - **`AUDIT.md`** — auditoría inicial del repo.
 - **`.gitignore`** ampliado, **`README.md`** con sección de reproducibilidad.
 
@@ -96,9 +98,11 @@
 - Bug PowerShell: parámetro `-Db` colisionaba con alias de `-Debug` → renombrado a `-Database`.
 
 ### Pipelines automatizados (Makefile, CI)
-**N/A** — no hay Makefile ni `.github/workflows/`. La "automatización" son los scripts PowerShell
-y el hook de formateo. CI no se ha configurado (no es necesario para un portafolio SQL estático;
-si se desea, ver §8).
+- **Makefile:** **N/A** — no hay. La "automatización" local son los scripts PowerShell y el hook de formateo.
+- **CI:** ✅ **configurado** (P2.1, 2026-06-02). `.github/workflows/ci.yml` corre en cada push/PR a `main`
+  (y `workflow_dispatch`) tres comprobaciones: (1) `sqlfluff lint queries --dialect sqlite`,
+  (2) `pwsh scripts/validate_db.ps1`, (3) `pwsh scripts/snapshot_predictive.ps1` (deriva predictiva).
+  Runner `ubuntu-latest`: instala `sqlfluff==4.2.1` (pip) y `sqlite3` (apt); usa `pwsh` para los `.ps1`.
 
 ### Sub-agentes definidos
 **Ninguno** específico del proyecto. Se puede delegar exploración a los agentes genéricos de Claude Code,
@@ -145,7 +149,11 @@ sql-analytics-portfolio/
 │   ├─ 02.diagnostic/  03.analytical/  04.predictive/  05.structural/   (misma estructura sql/ + img/)
 ├─ scripts/                     # Automatización en PowerShell (Windows).
 │   ├─ run_query.ps1            #   ejecuta un .sql contra la BD en modo -readonly
-│   └─ validate_db.ps1          #   conteos por tabla + comprobación de FKs huérfanas
+│   ├─ validate_db.ps1          #   conteos por tabla + comprobación de FKs huérfanas
+│   └─ snapshot_predictive.ps1  #   genera (-Update) / verifica snapshots de las predictivas
+├─ tests/
+│   └─ snapshots/04.predictive/ # Snapshots CSV de regresión (orden canónico) + README.md
+├─ .github/workflows/ci.yml     # CI: lint sqlfluff + validate_db + check de snapshots.
 ├─ configs/
 │   └─ thresholds.yaml          # Umbrales de calidad que consumen las skills (datos + consultas).
 ├─ docs/
@@ -241,11 +249,15 @@ sqlfluff fix  queries --dialect sqlite
   pwsh scripts/validate_db.ps1
   pwsh scripts/run_query.ps1 -Query queries/01.descriptive/data_quality/01_null_checks.sql
   ```
-- **Puntos débiles no cubiertos:**
-  - No hay verificación **automatizada en CI** (todo es manual / bajo demanda).
-  - Las consultas `04.predictive` no tienen aserciones de regresión (si la BD cambiara, no hay
-    snapshot que detecte derivas en los resultados).
+- **Verificación automatizada (CI):** ✅ desde P2.1. `.github/workflows/ci.yml` ejecuta en cada push/PR
+    el lint, la validación de la BD y el check de snapshots.
+- **Aserciones de regresión predictivas:** ✅ desde P2.2. `scripts/snapshot_predictive.ps1` captura el
+    resultado de las 8 consultas en `tests/snapshots/04.predictive/*.csv` (orden canónico, determinista).
+    `-Update` regenera cuando el cambio es esperado; sin flag verifica y falla ante deriva.
+- **Puntos débiles que quedan:**
   - El hook de formateo no valida semántica, solo estilo.
+  - Los snapshots son por contenido completo: una corrección legítima de una consulta exige regenerarlos
+    (`-Update`) y revisar el diff conscientemente.
 
 ---
 
@@ -282,27 +294,29 @@ sqlfluff fix  queries --dialect sqlite
 5. ~~`/query_review` de las 8 predictivas~~ ✅ P1.3 (`fec4706`) — incluyó fix del scoring RFM.
 6. ~~Resolver `06_customer_salesrep_map(_01/_02)`~~ ✅ P1.4 — documentadas como complementarias.
 
-**Prioridad baja** — infraestructura (únicas pendientes)
-7. (Opcional, P2.1) CI ligero: un workflow que ejecute `validate_db` y `sqlfluff lint` en cada push.
-8. (Opcional, P2.2) Snapshot de resultados esperados de las consultas predictivas para detección de derivas.
+**Prioridad baja** — infraestructura — ✅ todas completadas (P2, 2026-06-02)
+7. ~~(P2.1) CI ligero: workflow que ejecute `validate_db` y `sqlfluff lint` en cada push~~ ✅ Hecho —
+   `.github/workflows/ci.yml` (lint + validate_db + check de snapshots, en push/PR a `main`).
+8. ~~(P2.2) Snapshot de resultados esperados de las predictivas para detección de derivas~~ ✅ Hecho —
+   `scripts/snapshot_predictive.ps1` + `tests/snapshots/04.predictive/*.csv`.
+
+> **No quedan tareas técnicas pendientes.** El único frente abierto es no técnico: enriquecer la
+> presentación pública (§11), que es decisión del propietario.
 
 ---
 
 ## 9. Next Recommended Action
 
-> **Una sola cosa primero:** con todas las P0 y P1 cerradas, el único frente abierto son las P2
-> opcionales de infraestructura. Si se quiere seguir, empezar por **P2.1 — CI ligero**: crear
-> `.github/workflows/ci.yml` que en cada push ejecute la validación de la BD y el lint:
+> **Con P0, P1 y P2 cerradas, no quedan tareas técnicas.** El portafolio está presentable y, además,
+> protegido por CI (lint + integridad + regresión predictiva) en cada push/PR.
 >
-> ```yaml
-> # esquema mínimo
-> - run: sqlfluff lint queries --dialect sqlite
-> - run: pwsh scripts/validate_db.ps1
-> ```
+> **Lo único que mueve la aguja ahora es no técnico:** enriquecer la **presentación pública** (§11)
+> con la narrativa de negocio y los insights verificados. Es decisión del propietario y vive en el
+> repo de la página personal, no en este.
 >
-> Si no, el portafolio ya está en estado presentable: lint limpio, calidad documentada y consultas revisadas.
->
-> _(Las dos P0 ya están cerradas: reorganización git `03e9cb9` y conciliación del README P0.2.)_
+> **Antes de cerrar:** estos cambios de P2 están en el working tree pero **aún no commiteados ni
+> pusheados** — falta `git add` + commit (sugerido: `P2: CI ligero + snapshots de regresión predictiva`)
+> y `git push origin main`.
 
 ---
 

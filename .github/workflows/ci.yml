@@ -1,0 +1,48 @@
+name: CI
+
+# CI ligero para el portafolio SQL. No hay build ni tests de aplicación: lo que
+# se verifica es (1) estilo/dialecto del SQL, (2) integridad de la BD y
+# (3) que los resultados de las consultas predictivas no han derivado.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install sqlfluff
+        run: pip install "sqlfluff==4.2.1"
+
+      - name: Install sqlite3
+        run: sudo apt-get update && sudo apt-get install -y sqlite3
+
+      - name: Versions
+        run: |
+          sqlite3 --version
+          sqlfluff --version
+
+      # 1) Estilo y dialecto SQLite (debe estar en 0 violaciones).
+      - name: Lint SQL (sqlfluff)
+        run: sqlfluff lint queries --dialect sqlite
+
+      # 2) Integridad referencial y conteos de la BD.
+      - name: Validate database
+        shell: pwsh
+        run: pwsh scripts/validate_db.ps1
+
+      # 3) Detección de derivas en las consultas predictivas.
+      - name: Check predictive snapshots
+        shell: pwsh
+        run: pwsh scripts/snapshot_predictive.ps1
