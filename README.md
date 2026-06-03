@@ -173,6 +173,10 @@ pwsh scripts/run_query.ps1 -Query queries/01.descriptive/sql/03_business_overvie
 # Lint / format SQL (requires sqlfluff)
 sqlfluff lint queries --dialect sqlite
 sqlfluff fix  queries --dialect sqlite
+
+# Regression snapshots of the predictive queries (detect result drift)
+pwsh scripts/snapshot_predictive.ps1            # verify against saved snapshots
+pwsh scripts/snapshot_predictive.ps1 -Update    # regenerate when a change is intended
 ```
 
 **Claude Code skills**
@@ -181,5 +185,12 @@ sqlfluff fix  queries --dialect sqlite
 
 Quality thresholds live in `configs/thresholds.yaml`. A `PostToolUse` hook
 (`.claude/settings.json`) auto-formats `.sql` files with sqlfluff when it is installed.
+
+**Continuous integration**
+A lightweight CI workflow (`.github/workflows/ci.yml`) runs on every push and pull
+request to `main`, enforcing three checks: SQL lint (`sqlfluff`), database integrity
+(`validate_db.ps1`), and predictive-query regression (`snapshot_predictive.ps1`).
+Expected predictive results are stored as canonical-order CSV snapshots under
+`tests/snapshots/04.predictive/` (see `tests/snapshots/README.md`).
 
 
