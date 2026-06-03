@@ -47,7 +47,7 @@ Each module contains production-grade SQL with documentation, window functions, 
 ## Data Structure & Initial Checks
 
 The dataset contains detailed relational information on customers, products, orders, payments, offices, and employees.
-A full set of data quality checks (nulls, duplicates, FK integrity, hierarchy integrity) confirms the dataset is well-structured with a few minor issues (e.g., missing rep assignments, orphan order details).
+A full set of data quality checks (nulls, duplicates, FK integrity, hierarchy integrity) confirms the dataset is well-structured: referential integrity is intact (0 orphan rows across all foreign keys, including orderdetails, and an empty `PRAGMA foreign_key_check`). The only notable gap is a business one — 22 customers have no assigned sales rep (`salesRepEmployeeNumber IS NULL`, all with a 0 credit limit), which is a valid optional NULL rather than an integrity violation.
 
 Database Schema
 
@@ -114,8 +114,8 @@ Category 2 — Product & Sales Performance
 
 Category 3 — Operational Quality & Data Integrity
   - Outlier detection reveals bottom 5% and top 5% credit assignments → useful for risk & VIP identification.
-  - FK integrity checks find occasional orphan orderdetails → candidates for cleaning.
-  - Null checks reveal address and representative assignment gaps.
+  - FK integrity checks confirm 0 orphan rows (orderdetails, orders, payments, etc.) → the dataset is referentially clean.
+  - Null checks reveal address gaps and 22 customers with no assigned sales rep (a business gap, not an FK violation).
   - Duplicate checks confirm primary key integrity across customers, orders, and products.
   - Credit vs. sales misalignment (ratio-based) reveals accounts with disproportionate credit or low performance.
 
