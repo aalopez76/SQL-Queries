@@ -186,6 +186,6 @@ request to `main`, enforcing three checks: SQL lint (`sqlfluff`), database integ
 Expected predictive results are stored as canonical-order CSV snapshots under
 `tests/snapshots/04.predictive/` (see `tests/snapshots/README.md`).
 
-> Code review and data-quality QA were assisted by AI tooling.
+> Somecode review and data-quality QA were assisted by AI tooling.
 
 
