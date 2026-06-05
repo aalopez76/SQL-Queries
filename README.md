@@ -2,6 +2,10 @@
 
 A complete end-to-end SQL analytics project: descriptive, analytical, diagnostic, predictive, and structural analysis.
 
+> 📊 **Live demo:** these queries power an interactive executive dashboard —
+> [**Executive KPI Dashboard**](https://huggingface.co/spaces/aalpzp/Executive_KPI_Dashboard)
+> ([repository](https://github.com/aalopez76/Executive_Dashboard)).
+
 ### Project Background
 
 This project analyzes the operational, commercial, and organizational performance of Toys & Models Co., a global distributor of collectible scale models.
